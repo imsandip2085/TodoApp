@@ -1,0 +1,20 @@
+[
+  {
+   "id" : "0",
+   "name" : "xyz",
+   "checked" : true
+ },
+ {
+  "id" : "1",
+  "name" : "abc",
+  "checked" : true
+},
+{
+  "id" : "2",
+  "name" : "pqr",
+  "checked" : false
+}
+]
+ 
+ 
+

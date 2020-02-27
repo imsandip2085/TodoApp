@@ -1,0 +1,23 @@
+body{
+    background-color: azure;
+  
+}
+.todoApp{
+    color: grey;
+    margin: 20px 80px;
+}
+li{
+    list-style: none;
+    border: 1px solid grey;
+    border-radius: 2px;
+    display: block;
+    height: 40px;
+}
+.badge{
+    float:right;
+   margin-top: 8px;
+
+}
+.todo{
+    margin: 20px 80px;
+}
