@@ -9,15 +9,34 @@ body{
 li{
     list-style: none;
     border: 1px solid grey;
-    border-radius: 2px;
+    border-radius: 4px;
     display: block;
     height: 40px;
 }
 .badge{
     float:right;
-   margin-top: 8px;
+    margin-top: 8px;
 
+}
+.input1{
+    width: 98%;
+    margin-left: 30px;
+    margin-bottom: 20px;
+   
+}
+.buttonForm{
+    margin-left: 30px;
+    background-color: white;
+    border: 1px solid gainsboro;
+    border-radius: 2px;
 }
 .todo{
     margin: 20px 80px;
+}
+
+.input2{
+    border: 2px solid red;
+    width: 98%;
+    margin-left: 30px;
+    margin-bottom: 20px;
 }
