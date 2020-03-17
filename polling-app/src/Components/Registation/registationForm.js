@@ -1,0 +1,113 @@
+import React from "react";
+import { Form, Button, Navbar, Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { registationForm } from "../../Redux/Action/registation";
+import { connect } from "react-redux";
+
+class Registation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+      isLoading: "",
+      disable: false
+    };
+  }
+  handleUserChange = e => {
+    this.setState({ username: e.target.value });
+  };
+  handlePasswordChange = e => {
+    this.setState({ password: e.target.value });
+  };
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.registationRequest(this.state.username, this.state.password);
+    if (this.props.registerStatus && this.props.registerStatus.isRegistion) {
+      this.setState({ username: "" });
+      this.setState({ password: "" });
+    }
+  };
+  render() {
+    if (this.props.registerStatus && this.props.registerStatus.isRegistion) {
+      this.props.history.push("/login");
+    }
+    if (
+      this.props.registerStatus.error &&
+      this.props.registerStatus.error.error
+    ) {
+      console.log(this.props.registerStatus.error.message);
+    }
+
+    return (
+      <div>
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home">PollingApp</Navbar.Brand>
+          <Link to="/">
+            <Button variant="outline-info">Login</Button>
+          </Link>
+        </Navbar>
+        <div className="login">
+          <h1>Sign Up</h1>
+        </div>
+        <Form className="m-5">
+          <Form.Group controlId="formBasicEmail">
+            <div>
+              {this.props.registerStatus.error &&
+              this.props.registerStatus.error.error ? (
+                <h2>{this.props.registerStatus.error.message}</h2>
+              ) : null}
+            </div>
+            <Form.Label>UserName</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter UserName..."
+              value={this.state.username}
+              onChange={this.handleUserChange}
+            />
+            <Form.Text className="text-muted"></Form.Text>
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={this.handlePasswordChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlSelect1">
+            <Form.Label> Select User</Form.Label>
+            <Form.Control as="select">
+              <option>SelectUserType</option>
+              <option>Admin</option>
+              <option>Guest(User)</option>
+            </Form.Control>
+          </Form.Group>
+          <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+            {this.props.registerStatus.isLoading == true ? (
+              <Spinner
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : null}
+            Submit
+          </Button>
+        </Form>
+      </div>
+    );
+  }
+}
+const getProps = state => {
+  console.log(state.RegistationStatus);
+  return {
+    registerStatus: state.RegistationStatus
+  };
+};
+const dispatchProps = dispatch => ({
+  registationRequest: (username, password) =>
+    dispatch(registationForm(username, password))
+});
+export default connect(getProps, dispatchProps)(Registation);
