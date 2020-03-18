@@ -6,7 +6,7 @@ export default async function apiRequest(url, method, header) {
     switch (method) {
       case "get":
         response = await axios.get(url, { header: header });
-        console.log(response.data.token);
+        console.log(response.data);
         return response.data;
       default:
         break;

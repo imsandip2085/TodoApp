@@ -3,7 +3,6 @@ import apiRequest from "../../service/apicall";
 
 export function loginForm(username, password) {
   return async function(dispatch, getState) {
-    //    dispatch( LoginSuccess({response : response}));
     try {
       let error;
       dispatch(LoginRequest({ isLoading: true }));

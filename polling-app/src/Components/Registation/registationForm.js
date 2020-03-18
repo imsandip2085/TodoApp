@@ -101,7 +101,7 @@ class Registation extends React.Component {
   }
 }
 const getProps = state => {
-  console.log(state.RegistationStatus);
+ 
   return {
     registerStatus: state.RegistationStatus
   };
