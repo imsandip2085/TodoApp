@@ -15,3 +15,12 @@ export const UpdatePoll_Request = "UpdatePoll_Request";
 export const UpdatePoll_Success = "UpdatePoll_Success";
 export const UpdatePoll_Error = "UpdatePoll_Error";
 
+export const AddNewPoll_Request = "AddNewPoll_Request";
+export const AddNewPoll_Success = "AddNewPoll_Success";
+export const AddNewPoll_Error = "AddNewPoll_Error";
+
+
+
+
+
+

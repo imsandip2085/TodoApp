@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Navbar, Spinner } from "react-bootstrap";
-import { LogingForm, loginForm } from "../../Redux/Action/login";
+import {  loginForm } from "../../Redux/Action/login";
 import { LoginError } from "../../Redux/Action";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";

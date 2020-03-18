@@ -9,6 +9,7 @@ class DashBoard extends React.Component {
     super(props);
     this.state = {};
   }
+ 
   componentDidMount = () => {
     this.props.GetPollStatus();
   };
@@ -39,17 +40,13 @@ class DashBoard extends React.Component {
                     {val.options.map(res => {
                       return (
                         <li>
-                          <input
-                            type="radio"
-                            value={res.vote}
-                            checked={res.vote}
-                          ></input>
                           {res.option}
-                          {res.vote}
+                         <span>{res.vote}</span> 
                         </li>
                       );
                     })}
                   </ul>
+                  
                   <hr />
                 </Card.Body>
               </Card>

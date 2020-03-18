@@ -1,12 +1,14 @@
 import axios from "axios";
 
-export default async function apiRequest(url, method, header) {
+export default async function apiRequest(url, method, header,data) {
   try {
     let response;
     switch (method) {
       case "get":
         response = await axios.get(url, { header: header });
-        console.log(response.data);
+        return response.data;
+      case "post":
+        response = await axios.post(url, { headers: header, data: data });
         return response.data;
       default:
         break;

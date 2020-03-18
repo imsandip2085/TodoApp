@@ -12,9 +12,7 @@ export function getPollAction() {
         "get",
         {},
         {}
-      );
-      console.log(data,"actionnnnnnn");
-      
+      )
       if (data) {
         dispatch(GetPollSuccess({  response: data }));
       } else {
