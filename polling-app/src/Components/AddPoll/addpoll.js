@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Button, Container, Row, Col, Form } from "react-bootstrap";
+import { Navbar, Button, Container, Row, Col, Form,InputGroup} from "react-bootstrap";
 import { AddNewPollForm } from "../../Redux/Action/addNewPoll";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -16,8 +16,10 @@ class AddPoll extends React.Component {
   handleTitleChange = e => {
     this.setState({ title: e.target.value });
   };
-  handlePasswordChange = e => {
-    this.setState({ option: e.target.value });
+  handleOptionChange = (e,index) => {
+    const data =this.state.options;
+    data[index] = e.target.value;
+    this.setState({ options : data}) 
   };
   handleSubmit = event => {
     this.props.addNewPollRequest(this.state.title, this.state.option);
@@ -29,6 +31,12 @@ class AddPoll extends React.Component {
     this.setState(prevState => {
       return { options: [...prevState.options, ""] };
     });
+   
+  };
+  handleDeleteOption =( e, index)  => {
+    e.preventDefault();
+    this.state.options.splice(index , 1)
+    this.setState({options : this.state.options})  
   };
   render() {
     return (
@@ -56,26 +64,36 @@ class AddPoll extends React.Component {
                   />
                   <Form.Text className="text-muted"></Form.Text>
                 </Form.Group>
-                {this.state.options.map(options => {
+                {this.state.options.map((options, index) => {
                   return (
                     <Form.Group controlId="formBasicPassword">
-                      <Form.Label>Option</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Option...."
-                        value={this.state.option}
-                        onChange={this.handlePasswordChange}
-                      />
+                      <Form.Label>Option{index + 1}</Form.Label>
+                      <InputGroup>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter Option...."
+                          value={this.state.options[index]}
+                          onChange={(e)=> this.handleOptionChange(e, index)}
+                        />
+                          <Button className='ml-4'
+                            variant="danger"
+                            value={index}
+                            onClick={(e)=>this.handleDeleteOption(e, index)}
+                          >
+                            Delete Option
+                          </Button>
+                      </InputGroup>
                     </Form.Group>
                   );
                 })}
+                {!this.state.options.length == 0 ? (
                 <Button variant="primary" onClick={this.handleSubmit}>
                   Add Poll
-                </Button>{" "}
+                </Button>
+                ) : null } {" "}
                 <Button variant="primary" onClick={this.handleAddOption}>
                   Add Option
                 </Button>{" "}
-                <Button variant="primary">Delete Option</Button>{" "}
               </Form>
             </Col>
           </Row>

@@ -9,13 +9,12 @@ import { AddNewPollError, AddNewPollRequest, AddNewPollSuccess} from "./index";
         let error;
         dispatch(AddNewPollRequest({ isLoading: true }));
         let data = await apiRequest(
-          `https://secure-refuge-14993.herokuapp.com/add_poll?title=${title}&options=opt1____opt2____opt3____opt4`,
+          `https://secure-refuge-14993.herokuapp.com/add_poll?title=${title}&options=${option}____opt2____opt3____opt4`,
           "get",
           {},
           {}
         );
-        console.log(data);
-        
+        console.log(data); 
         if (!data.error) {
           dispatch(AddNewPollSuccess({ response: data }));
         } else {
