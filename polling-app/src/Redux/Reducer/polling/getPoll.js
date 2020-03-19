@@ -8,13 +8,13 @@ const initialState = {
   response : []
 };
 
-export default function GetPoll(state = initialState, action) {    
+export default function AddPoll(state = initialState, action) {    
   switch (action.type) {
-    case constant.GetPoll_Request:
+    case constant.AddPoll_Request:
       return { ...state, isLoading: true };
-    case constant.GetPoll_Success:
+    case constant.AddPoll_Success:
       return { ...state, isLoading: false, isFetched: true, response: action.payload.response.data };
-    case constant.GetPoll_Error:
+    case constant.AddPoll_Error:
       return { ...state, isError: true, isLoading:false, error: action.payload.error };
     default:
       return state;

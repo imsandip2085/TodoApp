@@ -11,9 +11,14 @@ class Registation extends React.Component {
       username: "",
       password: "",
       isLoading: "",
-      disable: false
+      disable: false,
+      option: ""
     };
   }
+  handleOptionChange = e => {
+    e.preventDefault();
+    this.setState({ option: e.target.value });
+  };
   handleUserChange = e => {
     this.setState({ username: e.target.value });
   };
@@ -36,7 +41,6 @@ class Registation extends React.Component {
       this.props.registerStatus.error &&
       this.props.registerStatus.error.error
     ) {
-      console.log(this.props.registerStatus.error.message);
     }
 
     return (
@@ -78,10 +82,10 @@ class Registation extends React.Component {
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect1">
             <Form.Label> Select User</Form.Label>
-            <Form.Control as="select">
+            <Form.Control as="select" onClick={this.handleOptionChange}>
               <option>SelectUserType</option>
-              <option>Admin</option>
-              <option>Guest(User)</option>
+              <option value="Admin">Admin</option>
+              <option value="Guest">Guest(User)</option>
             </Form.Control>
           </Form.Group>
           <Button variant="primary" type="submit" onClick={this.handleSubmit}>
@@ -101,13 +105,12 @@ class Registation extends React.Component {
   }
 }
 const getProps = state => {
- 
   return {
     registerStatus: state.RegistationStatus
   };
 };
 const dispatchProps = dispatch => ({
-  registationRequest: (username, password) =>
-    dispatch(registationForm(username, password))
+  registationRequest: (username, password, option) =>
+    dispatch(registationForm(username, password, option))
 });
 export default connect(getProps, dispatchProps)(Registation);

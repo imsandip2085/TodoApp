@@ -9,9 +9,9 @@ export const RegistationRequest = createAction(constant.Registation_Request);
 export const RegistationSuccess = createAction(constant.Registation_Success);
 export const RegistationError = createAction(constant.Registation_Error);
 
-export const GetPollRequest = createAction(constant.GetPoll_Request);
-export const GetPollSuccess = createAction(constant.GetPoll_Success);
-export const GetPollError = createAction(constant.GetPoll_Error);
+export const AddPollRequest = createAction(constant.AddPoll_Request);
+export const AddPollSuccess = createAction(constant.AddPoll_Success);
+export const AddPollError = createAction(constant.AddPoll_Error);
 
 export const UpdatePollRequest = createAction(constant.UpdatePoll_Request);
 export const UpdatePollSuccess = createAction(constant.UpdatePoll_Success);

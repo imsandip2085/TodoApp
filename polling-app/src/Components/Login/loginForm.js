@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Navbar, Spinner } from "react-bootstrap";
-import {  loginForm } from "../../Redux/Action/login";
+import { loginForm } from "../../Redux/Action/login";
 import { LoginError } from "../../Redux/Action";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -33,8 +33,6 @@ class Login extends React.Component {
     if (this.props.LoginStatus && this.props.LoginStatus.isLogin) {
       this.props.history.push("/dashboard");
     }
-    console.log(this.props.LoginStatus);
-
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">

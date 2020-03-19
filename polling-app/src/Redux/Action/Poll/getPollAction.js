@@ -1,25 +1,24 @@
-import { GetPollRequest, GetPollSuccess, GetPollError } from "../index";
+import { AddPollRequest, AddPollSuccess, AddPollError } from "../index";
 import apiRequest from "../../../service/apicall";
 
-
-export function getPollAction() {
-  return async function(dispatch) {     
+export function addPollAction() {
+  return async function(dispatch) {
     try {
-        let error;
-      dispatch(GetPollRequest({ isLoading: true })); 
+      let error;
+      dispatch(AddPollRequest({ isLoading: true }));
       let data = await apiRequest(
         `https://secure-refuge-14993.herokuapp.com/list_polls`,
         "get",
         {},
         {}
-      )
+      );
       if (data) {
-        dispatch(GetPollSuccess({  response: data }));
+        dispatch(AddPollSuccess({ response: data }));
       } else {
-        dispatch(GetPollError({ response: error }));
+        dispatch(AddPollError({ response: error }));
       }
     } catch (error) {
-      dispatch(GetPollError({  error: error }));
+      dispatch(AddPollError({ error: error }));
     }
   };
 }

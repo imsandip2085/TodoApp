@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function apiRequest(url, method, header,data) {
+export default async function apiRequest(url, method, header, data) {
   try {
     let response;
     switch (method) {

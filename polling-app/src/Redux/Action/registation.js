@@ -5,13 +5,13 @@ import {
 } from "./index";
 import apiRequest from "../../service/apicall";
 
-export function registationForm(username, password) {
+export function registationForm(username, password, option) {
   return async function(dispatch) {
     try {
       let error;
       dispatch(RegistationRequest({ isLoading: true }));
       let data = await apiRequest(
-        `https://secure-refuge-14993.herokuapp.com/add_user?username=${username}&password=${password}&role=admin`,
+        `https://secure-refuge-14993.herokuapp.com/add_user?username=${username}&password=${password}&role=${option}`,
         "get",
         {},
         {}
