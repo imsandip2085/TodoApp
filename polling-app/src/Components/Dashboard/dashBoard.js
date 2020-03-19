@@ -13,7 +13,9 @@ class DashBoard extends React.Component {
   componentDidMount = () => {
     this.props.AddPollStatus();
   };
-  componentDidUpdate = () => {};
+  componentDidUpdate = () => {
+    console.log(this.props.addPollStatus.response.length);
+  };
   render() {
     return (
       <div>

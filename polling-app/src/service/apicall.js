@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default async function apiRequest(url, method, header, data) {
+  let response;
   try {
-    let response;
     switch (method) {
       case "get":
         response = await axios.get(url, { header: header });
@@ -14,6 +14,6 @@ export default async function apiRequest(url, method, header, data) {
         break;
     }
   } catch (error) {
-    console.error(error);
+    response = await axios.get(url, { header: header, error: error });
   }
 }

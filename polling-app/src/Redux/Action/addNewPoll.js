@@ -12,7 +12,7 @@ export function AddNewPollForm(title, option) {
         {},
         {}
       );
-      console.log(data);
+      console.log(data, "ddfgnhggnbfdsaxvb");
       if (!data.error) {
         dispatch(AddNewPollSuccess({ response: data }));
       } else {

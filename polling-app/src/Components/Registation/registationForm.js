@@ -37,11 +37,6 @@ class Registation extends React.Component {
     if (this.props.registerStatus && this.props.registerStatus.isRegistion) {
       this.props.history.push("/login");
     }
-    if (
-      this.props.registerStatus.error &&
-      this.props.registerStatus.error.error
-    ) {
-    }
 
     return (
       <div>
