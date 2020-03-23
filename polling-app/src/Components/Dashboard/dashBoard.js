@@ -9,12 +9,11 @@ class DashBoard extends React.Component {
     super(props);
     this.state = {};
   }
-
   componentDidMount = () => {
     this.props.AddPollStatus();
   };
   componentDidUpdate = () => {
-    console.log(this.props.addPollStatus.response.length);
+    // console.log(this.props.addPollStatus.response.length);
   };
   render() {
     return (
@@ -23,6 +22,9 @@ class DashBoard extends React.Component {
           <Navbar.Brand href="#home">PollingApp</Navbar.Brand>
           <Link to="/dashboard/addpoll">
             <Button variant="success">Add Poll</Button>
+          </Link>
+          <Link to="/dashboard/updatepoll" className="ml-4">
+            <Button variant="success">Update Poll</Button>
           </Link>
         </Navbar>
         <div className="login">
