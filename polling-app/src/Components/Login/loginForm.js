@@ -85,6 +85,7 @@ class Login extends React.Component {
 }
 
 const getProps = state => {
+ 
   return {
     LoginStatus: state.LoginStatus
   };

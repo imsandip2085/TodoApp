@@ -30,8 +30,9 @@ class AddPoll extends React.Component {
     this.setState({ options: data });
   };
   handleSubmit = event => {
-    this.props.addNewPollRequest(this.state.title, this.state.option);
+    this.props.addNewPollRequest(this.state.title, this.state.options);
     event.preventDefault();
+    console.log(this.state.options, "argent");
   };
   handleAddOption = event => {
     event.preventDefault();
@@ -44,6 +45,7 @@ class AddPoll extends React.Component {
     this.state.options.splice(index, 1);
     this.setState({ options: this.state.options });
   };
+
   render() {
     return (
       <div>
@@ -51,6 +53,9 @@ class AddPoll extends React.Component {
           <Navbar.Brand href="#home">PollingApp</Navbar.Brand>
           <Link to="/dashboard">
             <Button variant="success">Dashboard</Button>
+          </Link>
+          <Link to="/dashboard/updatepoll" className="ml-4">
+            <Button variant="success">Update Poll</Button>
           </Link>
         </Navbar>
         <div className="login">
@@ -119,6 +124,6 @@ const getProps = state => {
 };
 
 const dispatchProps = dispatch => ({
-  addNewPollRequest: (title, option) => dispatch(AddNewPollForm(title, option))
+  addNewPollRequest: (title, options) => dispatch(AddNewPollForm(title, options))
 });
 export default connect(getProps, dispatchProps)(AddPoll);

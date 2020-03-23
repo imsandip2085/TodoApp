@@ -13,10 +13,23 @@ export const AddPollRequest = createAction(constant.AddPoll_Request);
 export const AddPollSuccess = createAction(constant.AddPoll_Success);
 export const AddPollError = createAction(constant.AddPoll_Error);
 
-export const UpdatePollRequest = createAction(constant.UpdatePoll_Request);
-export const UpdatePollSuccess = createAction(constant.UpdatePoll_Success);
-export const UpdatePollError = createAction(constant.UpdatePoll_Error);
-
 export const AddNewPollRequest = createAction(constant.AddNewPoll_Request);
 export const AddNewPollSuccess = createAction(constant.AddNewPoll_Success);
 export const AddNewPollError = createAction(constant.AddNewPoll_Error);
+
+export const UpdateTitleRequest = createAction(constant.UpdateTitle_Request);
+export const UpdateTitleSuccess = createAction(constant.UpdateTitle_Success);
+export const UpdateTitleError = createAction(constant.UpdateTitle_Error);
+
+export const AddNewOptionRequest = createAction(constant.AddNewOption_Request);
+export const AddNewOptionSuccess = createAction(constant.AddNewOption_Success);
+export const AddNewOptionError = createAction(constant.AddNewOption_Error);
+
+export const DeleteOptionSuccess = createAction(constant.DeleteOption_Request);
+export const DeleteOptionError = createAction(constant.DeleteOption_Success);
+export const DeleteOptionRequest = createAction(constant.DeleteOption_Error);
+
+export const DeletePollRequest = createAction(constant.DeletePoll_Request);
+export const DeletePollSuccess = createAction(constant.DeletePoll_Success);
+export const DeletePollError = createAction(constant.DeletePoll_Error);
+
