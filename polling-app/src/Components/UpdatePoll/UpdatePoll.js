@@ -6,7 +6,9 @@ import {
   Modal,
   InputGroup,
   FormControl,
-  Toast
+  Toast,
+  ToastHeader,
+  ToastBody
 } from "react-bootstrap";
 // import UpdatePoll from "../../Redux/Reducer/polling/updatePoll";
 import { addPollAction } from "../../Redux/Action/Poll/getPollAction";
@@ -89,8 +91,8 @@ class UpdatePoll extends React.Component {
           this.props.addPollStatus.response.map((val, index) => {
             return (
               <Card
-                style={{ width: "40rem", margin: "40px 120px" }}
                 className={"card"}
+                className="m-4"
               >
                 <Card.Body>
                   <Card.Title>Title : {val.title}</Card.Title>
@@ -99,8 +101,7 @@ class UpdatePoll extends React.Component {
                     {val.options.map(res => {
                       return (
                         <div>
-                          <li>{res.option}
-                          </li>
+                          <li>{res.option}<Toast className="toast"><ToastHeader></ToastHeader> </Toast> </li>
                         </div>
                       )
                     })}

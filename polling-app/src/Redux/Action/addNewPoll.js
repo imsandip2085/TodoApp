@@ -2,12 +2,11 @@ import { AddNewPollError, AddNewPollRequest, AddNewPollSuccess } from "./index";
 import apiRequest from "../../service/apicall";
 
 export function AddNewPollForm(title, options) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     let options_string = "";
-    options.map((opt) =>{
+    options.map((opt) => {
       options_string += opt + '____';
     })
-    console.log(options_string);
     try {
       let error;
       dispatch(AddNewPollRequest({ isLoading: true }));
@@ -17,7 +16,6 @@ export function AddNewPollForm(title, options) {
         {},
         {}
       );
-      console.log(data, "ddfgnhggnbfdsaxvb");
       if (!data.error) {
         dispatch(AddNewPollSuccess({ response: data }));
       } else {

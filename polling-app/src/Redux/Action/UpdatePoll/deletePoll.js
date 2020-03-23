@@ -4,7 +4,6 @@ import apiRequest from "../../../service/apicall";
 export function deletePollForm(id) {
     return async function (dispatch, getState) {
         try {
-            console.log(id, "deleteid");
             let error;
             dispatch(DeletePollRequest({ isLoading: true }));
             let data = await apiRequest(
@@ -12,7 +11,7 @@ export function deletePollForm(id) {
                 "post",
                 {},
                 {}
-            ).then(res => { console.log(res, "fffff") });
+            ).then(res => { });
             if (!data.error) {
                 dispatch(DeletePollSuccess({ response: data }));
             } else {
