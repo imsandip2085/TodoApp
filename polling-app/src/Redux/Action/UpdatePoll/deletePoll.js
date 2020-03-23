@@ -1,5 +1,6 @@
 import { DeletePollRequest, DeletePollError, DeletePollSuccess } from "../index";
 import apiRequest from "../../../service/apicall";
+import { addPollAction } from "../../Action/Poll/getPollAction"
 
 export function deletePollForm(id) {
     return async function (dispatch, getState) {
@@ -11,7 +12,7 @@ export function deletePollForm(id) {
                 "post",
                 {},
                 {}
-            ).then(res => { });
+            ).then(res => dispatch(addPollAction()));
             if (!data.error) {
                 dispatch(DeletePollSuccess({ response: data }));
             } else {

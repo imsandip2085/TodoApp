@@ -6,7 +6,7 @@ import {
 import apiRequest from "../../service/apicall";
 
 export function registationForm(username, password, option) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       let error;
       dispatch(RegistationRequest({ isLoading: true }));

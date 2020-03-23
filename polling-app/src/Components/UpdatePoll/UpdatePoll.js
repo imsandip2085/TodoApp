@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { updateTitleForm } from "../../Redux/Action/UpdatePoll/updateTitle";
 import { addNewOptionForm } from "../../Redux/Action/UpdatePoll/addNewOption";
 import { deletePollForm } from "../../Redux/Action/UpdatePoll/deletePoll";
+import { deleteOptionForm } from "../../Redux/Action/UpdatePoll/deleteOption";
 
 
 class UpdatePoll extends React.Component {
@@ -27,7 +28,7 @@ class UpdatePoll extends React.Component {
       newOptionShow: false,
       deleteOption: false,
       title: "",
-      newOption: "",
+      newOption: [],
       id: ""
     };
   }
@@ -56,13 +57,11 @@ class UpdatePoll extends React.Component {
   };
   handleNewOptionClose = (e) => {
     this.setState({ newOptionShow: false });
-    e.preventDefault();
     this.props.addNewOptionRequest(this.state.id, this.state.newOption);
   };
   handleDeletePoll = (e, id) => {
     e.preventDefault();
     this.props.deletePollRequest(id);
-    console.log(id, "dfgojodb;kfvlcvc");
   }
   handleChangeTitle = e => {
     this.setState({ title: e.target.value });
@@ -70,7 +69,9 @@ class UpdatePoll extends React.Component {
   handleChangeAddNewOption = e => {
     this.setState({ newOption: e.target.value });
   }
-
+  handleDeleteOption = (e, id, text) => {
+    this.props.deleteOptionRequest(id, text);
+  }
   render() {
     return (
       <div>
@@ -98,10 +99,14 @@ class UpdatePoll extends React.Component {
                   <Card.Title>Title : {val.title}</Card.Title>
                   Options :
                   <ul>
-                    {val.options.map(res => {
+                    {val.options.map((res, index) => {
                       return (
                         <div>
-                          <li>{res.option}<Toast className="toast"><ToastHeader></ToastHeader> </Toast> </li>
+                          <li className={'mt-3'} >{res.option}<Toast className="toast">
+                            <ToastHeader value={val._id} onClick={(e) => this.handleDeleteOption(e, val._id, res.option)}>
+                            </ToastHeader>
+                          </Toast>
+                          </li>
                         </div>
                       )
                     })}
@@ -116,14 +121,7 @@ class UpdatePoll extends React.Component {
                   >
                     New Option
                   </Button>{" "}
-                  <Button
-                    variant="outline-danger"
-                    onClick={this.handleDeleteOptionShow}
-                  >
-                    Delete Option
-                  </Button>{" "}
                   <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleDeletePoll(e, val._id)}>Delete Poll</Button>
-
                 </Card.Body>
               </Card>
             );
@@ -172,13 +170,14 @@ const getProps = state => {
     addPollStatus: state.AddPollStatus,
     updateTitleStatus: state.UpdateTitleStatus,
     addNewOptionStatus: state.AddNewOptionStatus,
-    deleteOptionStatus: state.DeleteOptionStatus
+    deletePollStatus: state.DeletePollStatus
   };
 };
 const dispatchProps = dispatch => ({
   AddPollStatus: () => dispatch(addPollAction()),
   updateTitleRequest: (title, id) => dispatch(updateTitleForm(title, id)),
   addNewOptionRequest: (id, newOption) => dispatch(addNewOptionForm(id, newOption)),
-  deletePollRequest: (id) => dispatch(deletePollForm(id))
+  deletePollRequest: (id) => dispatch(deletePollForm(id)),
+  deleteOptionRequest: (id, text) => dispatch(deleteOptionForm(id, text))
 });
 export default connect(getProps, dispatchProps)(UpdatePoll);
