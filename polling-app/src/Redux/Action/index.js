@@ -33,3 +33,6 @@ export const DeletePollRequest = createAction(constant.DeletePoll_Request);
 export const DeletePollSuccess = createAction(constant.DeletePoll_Success);
 export const DeletePollError = createAction(constant.DeletePoll_Error);
 
+export const GetVoteRequest = createAction(constant.GetVote_Request);
+export const GetVoteSuccess = createAction(constant.GetVote_Success);
+export const GetVoteError = createAction(constant.GetVote_Error);

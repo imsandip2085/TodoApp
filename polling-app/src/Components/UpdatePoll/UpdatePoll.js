@@ -10,7 +10,6 @@ import {
   ToastHeader,
   ToastBody
 } from "react-bootstrap";
-// import UpdatePoll from "../../Redux/Reducer/polling/updatePoll";
 import { addPollAction } from "../../Redux/Action/Poll/getPollAction";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -18,6 +17,8 @@ import { updateTitleForm } from "../../Redux/Action/UpdatePoll/updateTitle";
 import { addNewOptionForm } from "../../Redux/Action/UpdatePoll/addNewOption";
 import { deletePollForm } from "../../Redux/Action/UpdatePoll/deletePoll";
 import { deleteOptionForm } from "../../Redux/Action/UpdatePoll/deleteOption";
+import  DeleteOptionConfirmationBox from './DeleteOptionConfirmationBox';
+import DeletePollConfirmationBox from "./DeletePollConformationBox";
 
 
 class UpdatePoll extends React.Component {
@@ -26,32 +27,30 @@ class UpdatePoll extends React.Component {
     this.state = {
       showTitle: false,
       newOptionShow: false,
-      deleteOption: false,
+      deleteOptionShow: false,
+      deletePollShow: false,
       title: "",
       newOption: [],
-      id: ""
+      id: "",
+      deleteOptionValue : false,
     };
   }
   componentDidMount = () => {
     this.props.AddPollStatus();
   };
   componentDidUpdate = () => {
-    console.log(this.props.addPollStatus.response.option, "SDGFJHKJHGFDS");
+   
   };
 
-  handleTitleShow = (e, id) => {
-    e.preventDefault();
+  handleTitleShow = (e, id) => { 
     this.setState({ id: id })
     this.setState({ showTitle: true });
   };
   handleTitleClose = e => {
     this.setState({ showTitle: false });
-    e.preventDefault();
     this.props.updateTitleRequest(this.state.title, this.state.id);
-
   };
   handleNewOptionShow = (e, id) => {
-    e.preventDefault();
     this.setState({ id: id })
     this.setState({ newOptionShow: true });
   };
@@ -59,10 +58,6 @@ class UpdatePoll extends React.Component {
     this.setState({ newOptionShow: false });
     this.props.addNewOptionRequest(this.state.id, this.state.newOption);
   };
-  handleDeletePoll = (e, id) => {
-    e.preventDefault();
-    this.props.deletePollRequest(id);
-  }
   handleChangeTitle = e => {
     this.setState({ title: e.target.value });
   };
@@ -70,7 +65,24 @@ class UpdatePoll extends React.Component {
     this.setState({ newOption: e.target.value });
   }
   handleDeleteOption = (e, id, text) => {
-    this.props.deleteOptionRequest(id, text);
+    this.setState({deleteOptionShow : false})
+      this.props.deleteOptionRequest(this.state.deleteId, this.state.deleteText);
+  }
+  handleDeleteModel =(e,id,text) =>{
+    this.setState({deleteOptionShow : true , deleteId : id, deleteText : text})
+  }
+  handleHideModel = (e,id,text) =>{
+    this.setState({deleteOptionShow : false})
+  }
+  handleDeletePoll =(e, id) =>{
+    this.setState({deletePollShow : false})
+    this.props.deletePollRequest(this.state.deletePollId);
+  }
+  handleShowDeletePollModele =( e, id) =>{
+    this.setState({deletePollShow : true , deletePollId : id})
+  }
+  handleDeletePollHideModel = (e,id)=>{
+    this.setState({deletePollShow:false})
   }
   render() {
     return (
@@ -102,8 +114,8 @@ class UpdatePoll extends React.Component {
                     {val.options.map((res, index) => {
                       return (
                         <div>
-                          <li className={'mt-3'} >{res.option}<Toast className="toast">
-                            <ToastHeader value={val._id} onClick={(e) => this.handleDeleteOption(e, val._id, res.option)}>
+                          <li className={'mt-3'} > <span className="pl-4">{res.vote}</span> {res.option}<Toast className="toast">
+                            <ToastHeader optionId={val._id}  onClick={(e) => this.handleDeleteModel(e, val._id, res.option)}>
                             </ToastHeader>
                           </Toast>
                           </li>
@@ -121,12 +133,12 @@ class UpdatePoll extends React.Component {
                   >
                     New Option
                   </Button>{" "}
-                  <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleDeletePoll(e, val._id)}>Delete Poll</Button>
+                  <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleShowDeletePollModele(e, val._id)}>Delete Poll</Button>
                 </Card.Body>
               </Card>
             );
           })}
-        {/* Edit Title */}
+       
         <Modal show={this.state.showTitle} onHide={this.handleTitleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Title</Modal.Title>
@@ -144,7 +156,6 @@ class UpdatePoll extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
-        {/* New OPTION */}
         <Modal show={this.state.newOptionShow} onHide={this.handleNewOptionClose}>
           <Modal.Header closeButton>
             <Modal.Title>New Option</Modal.Title>
@@ -161,6 +172,8 @@ class UpdatePoll extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
+        <DeletePollConfirmationBox Show={this.state.deletePollShow} handleDeletePoll={this.handleDeletePoll} handleDeletePollHideModel={this.handleDeletePollHideModel}/>
+        <DeleteOptionConfirmationBox  Show={this.state.deleteOptionShow} handleDeleteOption = { this.handleDeleteOption} handleHideModel = { this.handleHideModel}/>
       </div>
     );
   }
