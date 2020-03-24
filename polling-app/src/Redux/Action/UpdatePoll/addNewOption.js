@@ -13,8 +13,7 @@ export function addNewOptionForm(id, newOption) {
         {},
         {}
       ).then(res => dispatch(addPollAction()));
-      console.log(data.option_text, "dfhgjkjkjhhcgfhvjb");
-
+     
       if (!data.error) {
         dispatch(AddNewOptionSuccess({ response: data }));
       } else {

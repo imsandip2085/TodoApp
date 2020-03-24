@@ -9,12 +9,6 @@ class DeleteOptionConfirmationBox extends React.Component {
             deleteOptionShow: false,
         }
     }
-    handleDeleteYes = () => {
-        this.setState({ deleteOptionShow: true })
-    }
-    handleDeleteNo = () => {
-        this.setState({ deleteOptionShow: false })
-    }
     render() {
         return (
             <Modal show={this.props.Show} onHide={this.props.handleHideModel}>

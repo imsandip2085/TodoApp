@@ -9,12 +9,6 @@ class DeletePollConfirmationBox extends React.Component {
             deletePollShow: false,
         }
     }
-    handleDeleteYes = () => {
-        this.setState({ deletePollShow: true })
-    }
-    handleDeleteNo = () => {
-        this.setState({ deletePollShow: false })
-    }
     render() {
         return (
             <Modal show={this.props.Show} onHide={this.props.handleDeletePollHideModel}>

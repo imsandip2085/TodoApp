@@ -17,7 +17,6 @@ class DashBoard extends React.Component {
 
   };
   handleVoteClick = (id, text) => {
-
     this.props.getVoteRequest(id, text)
   }
   render() {
