@@ -53,9 +53,9 @@ class Registation extends React.Component {
           <Form.Group controlId="formBasicEmail">
             <div>
               {this.props.registerStatus.error &&
-              this.props.registerStatus.error.error ? (
-                <h2>{this.props.registerStatus.error.message}</h2>
-              ) : null}
+                this.props.registerStatus.error.error ? (
+                  <h2>{this.props.registerStatus.error.message}</h2>
+                ) : null}
             </div>
             <Form.Label>UserName</Form.Label>
             <Form.Control

@@ -31,7 +31,7 @@ class Login extends React.Component {
 
   render() {
     if (this.props.LoginStatus && this.props.LoginStatus.isLogin) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/updatepoll");
     }
     return (
       <div>

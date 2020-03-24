@@ -44,16 +44,12 @@ class AddPoll extends React.Component {
     this.state.options.splice(index, 1);
     this.setState({ options: this.state.options });
   };
-
   render() {
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">
           <Navbar.Brand href="#home">PollingApp</Navbar.Brand>
-          <Link to="/dashboard">
-            <Button variant="success">Dashboard</Button>
-          </Link>
-          <Link to="/dashboard/updatepoll" className="ml-4">
+          <Link to="/updatepoll" className="ml-4">
             <Button variant="success">Update Poll</Button>
           </Link>
         </Navbar>
