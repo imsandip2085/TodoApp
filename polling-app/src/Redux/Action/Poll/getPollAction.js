@@ -2,7 +2,7 @@ import { AddPollRequest, AddPollSuccess, AddPollError } from "../index";
 import apiRequest from "../../../service/apicall";
 
 export function addPollAction() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       let error;
       dispatch(AddPollRequest({ isLoading: true }));

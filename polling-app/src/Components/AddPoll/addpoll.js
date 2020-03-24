@@ -32,7 +32,6 @@ class AddPoll extends React.Component {
   handleSubmit = event => {
     this.props.addNewPollRequest(this.state.title, this.state.options);
     event.preventDefault();
-    console.log(this.state.options, "argent");
   };
   handleAddOption = event => {
     event.preventDefault();

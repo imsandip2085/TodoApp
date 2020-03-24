@@ -50,9 +50,9 @@ class Login extends React.Component {
           <Form.Group controlId="formBasicEmail">
             <div>
               {this.props.LoginStatus.response &&
-              this.props.LoginStatus.response.error ? (
-                <h2>{this.props.LoginStatus.response.data}</h2>
-              ) : null}
+                this.props.LoginStatus.response.error ? (
+                  <h2>{this.props.LoginStatus.response.data}</h2>
+                ) : null}
             </div>
             <Form.Label>User Name</Form.Label>
             <Form.Control
@@ -85,7 +85,6 @@ class Login extends React.Component {
 }
 
 const getProps = state => {
- 
   return {
     LoginStatus: state.LoginStatus
   };

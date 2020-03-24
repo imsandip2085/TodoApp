@@ -3,6 +3,7 @@ import { Navbar, Card, Button } from "react-bootstrap";
 import { addPollAction } from "../../Redux/Action/Poll/getPollAction";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { GetVote } from "../../Redux/Action/Poll/getVote";
 
 class DashBoard extends React.Component {
   constructor(props) {
@@ -15,6 +16,9 @@ class DashBoard extends React.Component {
   componentDidUpdate = () => {
 
   };
+  handleVoteClick = (id, text) => {
+    this.props.getVoteRequest(id, text)
+  }
   render() {
     return (
       <div>
@@ -33,17 +37,19 @@ class DashBoard extends React.Component {
         {this.props.addPollStatus.response &&
           this.props.addPollStatus.response.length &&
           this.props.addPollStatus.response.map((val, key) => {
+            console.log(val.options, "ft")
             return (
               <Card style={{ margin: "40px 60px" }} className={"card"}>
                 <Card.Body>
                   <Card.Title>Title : {val.title} </Card.Title>
                   Options :
                   <ul>
-                    {val.options.map(res => {
+                    {val.options.map((res, index) => {
                       return (
                         <li>
-                          {res.option}
-                          <span>{res.vote}</span>
+                          <input type="radio" onClick={(e) => this.handleVoteClick(index, res.option)}>
+                          </input>
+                          <label className="pl-4">{res.option} {res.index1} </label>
                         </li>
                       );
                     })}
@@ -59,10 +65,12 @@ class DashBoard extends React.Component {
 }
 const getProps = state => {
   return {
-    addPollStatus: state.AddPollStatus
+    addPollStatus: state.AddPollStatus,
+    getVoteStatus: state.GetVoteStatus
   };
 };
 const dispatchProps = dispatch => ({
-  AddPollStatus: () => dispatch(addPollAction())
+  AddPollStatus: () => dispatch(addPollAction()),
+  getVoteRequest: (id, text) => dispatch(GetVote(id, text))
 });
 export default connect(getProps, dispatchProps)(DashBoard);

@@ -10,13 +10,17 @@ import {
   ToastHeader,
   ToastBody
 } from "react-bootstrap";
-// import UpdatePoll from "../../Redux/Reducer/polling/updatePoll";
 import { addPollAction } from "../../Redux/Action/Poll/getPollAction";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { updateTitleForm } from "../../Redux/Action/UpdatePoll/updateTitle";
 import { addNewOptionForm } from "../../Redux/Action/UpdatePoll/addNewOption";
 import { deletePollForm } from "../../Redux/Action/UpdatePoll/deletePoll";
+import { deleteOptionForm } from "../../Redux/Action/UpdatePoll/deleteOption";
+import DeleteOptionConfirmationBox from './DeleteOptionConfirmationBox';
+import DeletePollConfirmationBox from "./DeletePollConformationBox";
+import UpdateTitleConfirmationBox from './UpdateTitleConfirm';
+import AddNewOptionConfirmationBox from './AddNewOption';
 
 
 class UpdatePoll extends React.Component {
@@ -25,52 +29,66 @@ class UpdatePoll extends React.Component {
     this.state = {
       showTitle: false,
       newOptionShow: false,
-      deleteOption: false,
+      deleteOptionShow: false,
+      deletePollShow: false,
       title: "",
-      newOption: "",
-      id: ""
+      newOption: [],
+      id: "",
+      deleteOptionValue: false,
     };
   }
   componentDidMount = () => {
     this.props.AddPollStatus();
   };
   componentDidUpdate = () => {
-    console.log(this.props.addPollStatus.response.option, "SDGFJHKJHGFDS");
-  };
 
-  handleTitleShow = (e, id) => {
-    e.preventDefault();
-    this.setState({ id: id })
-    this.setState({ showTitle: true });
   };
-  handleTitleClose = e => {
+  handleShowEditTitleModele = (e, id, titleText) => {
+    this.setState({ showTitle: true, editTitleId: id, titleText1: titleText });
+
+  };
+  handleEditTitleModel = (e, id, titleText) => {
     this.setState({ showTitle: false });
-    e.preventDefault();
-    this.props.updateTitleRequest(this.state.title, this.state.id);
+    this.props.updateTitleRequest(this.state.title, this.state.editTitleId);
 
+  };
+  handleHideEditTitleModel = (e, id, titleText) => {
+    this.setState({ showTitle: false })
+  }
+  handleChangeTitle = (e, titleText) => {
+    this.setState({ title: e.target.value });
   };
   handleNewOptionShow = (e, id) => {
-    e.preventDefault();
     this.setState({ id: id })
     this.setState({ newOptionShow: true });
   };
   handleNewOptionClose = (e) => {
     this.setState({ newOptionShow: false });
-    e.preventDefault();
     this.props.addNewOptionRequest(this.state.id, this.state.newOption);
-  };
-  handleDeletePoll = (e, id) => {
-    e.preventDefault();
-    this.props.deletePollRequest(id);
-    console.log(id, "dfgojodb;kfvlcvc");
-  }
-  handleChangeTitle = e => {
-    this.setState({ title: e.target.value });
   };
   handleChangeAddNewOption = e => {
     this.setState({ newOption: e.target.value });
   }
-
+  handleDeleteOption = (e, id, text) => {
+    this.setState({ deleteOptionShow: false })
+    this.props.deleteOptionRequest(this.state.deleteId, this.state.deleteText);
+  }
+  handleDeleteModel = (e, id, text) => {
+    this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text })
+  }
+  handleHideModel = (e, id, text) => {
+    this.setState({ deleteOptionShow: false })
+  }
+  handleDeletePoll = (e, id) => {
+    this.setState({ deletePollShow: false })
+    this.props.deletePollRequest(this.state.deletePollId);
+  }
+  handleShowDeletePollModele = (e, id) => {
+    this.setState({ deletePollShow: true, deletePollId: id })
+  }
+  handleDeletePollHideModel = (e, id) => {
+    this.setState({ deletePollShow: false })
+  }
   render() {
     return (
       <div>
@@ -89,6 +107,7 @@ class UpdatePoll extends React.Component {
         {this.props.addPollStatus.response &&
           this.props.addPollStatus.response.length &&
           this.props.addPollStatus.response.map((val, index) => {
+
             return (
               <Card
                 className={"card"}
@@ -96,18 +115,23 @@ class UpdatePoll extends React.Component {
               >
                 <Card.Body>
                   <Card.Title>Title : {val.title}</Card.Title>
+
                   Options :
                   <ul>
-                    {val.options.map(res => {
+                    {val.options.map((res, index) => {
                       return (
                         <div>
-                          <li>{res.option}<Toast className="toast"><ToastHeader></ToastHeader> </Toast> </li>
+                          <li className={'mt-3'} > <span className="pl-4">{res.vote}</span> {res.option}<Toast className="toast">
+                            <ToastHeader optionId={val._id} onClick={(e) => this.handleDeleteModel(e, val._id, res.option)}>
+                            </ToastHeader>
+                          </Toast>
+                          </li>
                         </div>
                       )
                     })}
                   </ul>
                   <hr />
-                  <Button variant="outline-info" value={val._id} onClick={(e) => this.handleTitleShow(e, val._id)}>
+                  <Button variant="outline-info" value={val._id} onClick={(e) => this.handleShowEditTitleModele(e, val._id, val.title)}>
                     Edit Title
                   </Button>{" "}
                   <Button
@@ -116,53 +140,18 @@ class UpdatePoll extends React.Component {
                   >
                     New Option
                   </Button>{" "}
-                  <Button
-                    variant="outline-danger"
-                    onClick={this.handleDeleteOptionShow}
-                  >
-                    Delete Option
-                  </Button>{" "}
-                  <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleDeletePoll(e, val._id)}>Delete Poll</Button>
-
+                  <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleShowDeletePollModele(e, val._id)}>Delete Poll</Button>
                 </Card.Body>
               </Card>
             );
           })}
-        {/* Edit Title */}
-        <Modal show={this.state.showTitle} onHide={this.handleTitleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Title</Modal.Title>
-          </Modal.Header>
-          <InputGroup className="mb-3">
-            <FormControl
-              placeholder="Title...."
-              value={this.state.title}
-              onChange={this.handleChangeTitle}
-            />
-          </InputGroup>
-          <Modal.Footer>
-            <Button variant="primary" onClick={this.handleTitleClose}>
-              Update
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        {/* New OPTION */}
-        <Modal show={this.state.newOptionShow} onHide={this.handleNewOptionClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>New Option</Modal.Title>
-          </Modal.Header>
-          <InputGroup className="mb-3">
-            <FormControl placeholder="New Option...."
-              value={this.state.newOption}
-              onChange={this.handleChangeAddNewOption}
-            />
-          </InputGroup>
-          <Modal.Footer>
-            <Button variant="primary" onClick={this.handleNewOptionClose}>
-              Add
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <UpdateTitleConfirmationBox Show={this.state.showTitle}
+          handleChangeTitle={this.handleChangeTitle}
+          handleEditTitleModel={this.handleEditTitleModel}
+          handleHideEditTitleModel={this.handleHideEditTitleModel} />
+        <AddNewOptionConfirmationBox Show={this.state.newOptionShow} />
+        <DeletePollConfirmationBox Show={this.state.deletePollShow} handleDeletePoll={this.handleDeletePoll} handleDeletePollHideModel={this.handleDeletePollHideModel} />
+        <DeleteOptionConfirmationBox Show={this.state.deleteOptionShow} handleDeleteOption={this.handleDeleteOption} handleHideModel={this.handleHideModel} />
       </div>
     );
   }
@@ -172,13 +161,14 @@ const getProps = state => {
     addPollStatus: state.AddPollStatus,
     updateTitleStatus: state.UpdateTitleStatus,
     addNewOptionStatus: state.AddNewOptionStatus,
-    deleteOptionStatus: state.DeleteOptionStatus
+    deletePollStatus: state.DeletePollStatus
   };
 };
 const dispatchProps = dispatch => ({
   AddPollStatus: () => dispatch(addPollAction()),
   updateTitleRequest: (title, id) => dispatch(updateTitleForm(title, id)),
   addNewOptionRequest: (id, newOption) => dispatch(addNewOptionForm(id, newOption)),
-  deletePollRequest: (id) => dispatch(deletePollForm(id))
+  deletePollRequest: (id) => dispatch(deletePollForm(id)),
+  deleteOptionRequest: (id, text) => dispatch(deleteOptionForm(id, text))
 });
 export default connect(getProps, dispatchProps)(UpdatePoll);

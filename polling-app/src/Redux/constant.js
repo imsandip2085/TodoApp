@@ -30,5 +30,8 @@ export const DeletePoll_Request = "DeletePoll_Request";
 export const DeletePoll_Success = "DeletePoll_Success";
 export const DeletePoll_Error = "DeletePoll_Error";
 
+export const GetVote_Request = "GetVote_Request";
+export const GetVote_Success = "GetVote_Success";
+export const GetVote_Error = "GetVote_Error";
 
 

@@ -1,5 +1,6 @@
 import { AddNewOptionRequest, AddNewOptionError, AddNewOptionSuccess } from "../index";
 import apiRequest from "../../../service/apicall";
+import { addPollAction } from "../../Action/Poll/getPollAction"
 
 export function addNewOptionForm(id, newOption) {
   return async function (dispatch, getState) {
@@ -11,7 +12,8 @@ export function addNewOptionForm(id, newOption) {
         "post",
         {},
         {}
-      ).then(res => { });
+      ).then(res => dispatch(addPollAction()));
+     
       if (!data.error) {
         dispatch(AddNewOptionSuccess({ response: data }));
       } else {
