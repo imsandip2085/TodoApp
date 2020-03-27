@@ -4,6 +4,8 @@ import {
   RegistationRequest
 } from "./index";
 import apiRequest from "../../service/apicall";
+import jwt from 'jsonwebtoken';
+
 
 export function registationForm(username, password, option) {
   return async function (dispatch) {
@@ -16,6 +18,7 @@ export function registationForm(username, password, option) {
         {},
         {}
       );
+
       if (data.error == 0) {
         dispatch(RegistationSuccess({ registation: true, response: data }));
       } else {

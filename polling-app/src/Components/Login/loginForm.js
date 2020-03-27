@@ -27,12 +27,23 @@ class Login extends React.Component {
       this.setState({ username: "" });
       this.setState({ password: "" });
     }
+
   };
 
-  render() {
-    if (this.props.LoginStatus && this.props.LoginStatus.isLogin) {
-      this.props.history.push("/updatepoll");
+  componentDidUpdate(preProps) {
+    const { LoginStatus } = this.props;
+
+    if (LoginStatus.isLogin !== preProps.LoginStatus.isLogin && LoginStatus.isLogin) {
+      console.log(LoginStatus.response.data.token, "sscjdvfdvdbffjb")
+      if (LoginStatus.response.role === "admin") {
+        this.props.history.push("/updatepoll");
+      } else {
+        this.props.history.push("/dashboard");
+      }
     }
+  }
+
+  render() {
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">

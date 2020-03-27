@@ -8,9 +8,10 @@ class UpdateTitleConfirmationBox extends React.Component {
                 <Modal.Header closeButton>
                     <Modal.Title>Title</Modal.Title>
                 </Modal.Header>
-                <InputGroup className="mb-3">
-                    <FormControl
-                        value={this.props.titleText}
+
+                <InputGroup >
+                    <FormControl className=" ml-5 mr-5"
+                        value={this.props.titleText1}
                         onChange={this.props.handleChangeTitle}
                     />
                 </InputGroup>

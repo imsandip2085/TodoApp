@@ -1,5 +1,7 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+
 
 
 class DeleteOptionConfirmationBox extends React.Component {
@@ -11,10 +13,9 @@ class DeleteOptionConfirmationBox extends React.Component {
     }
     render() {
         return (
-            <Modal show={this.props.Show} onHide={this.props.handleHideModel}>
-                <Modal.Header closeButton>
-                    <p>Are u sure want to delete this option</p>
-                </Modal.Header>
+            <Modal show={this.props.Show} >
+                <h6 className="m-4">Are u sure want to delete this option</h6><hr />
+                <h6 className=" text-center">{this.props.optionText}</h6>
                 <Modal.Footer>
                     <Button variant="primary" size="xs" onClick={this.props.handleDeleteOption}>
                         Yes
@@ -27,4 +28,5 @@ class DeleteOptionConfirmationBox extends React.Component {
         )
     }
 }
+
 export default DeleteOptionConfirmationBox;

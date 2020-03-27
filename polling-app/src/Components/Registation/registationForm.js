@@ -3,6 +3,7 @@ import { Form, Button, Navbar, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { registationForm } from "../../Redux/Action/registation";
 import { connect } from "react-redux";
+import jwt from 'jsonwebtoken';
 
 class Registation extends React.Component {
   constructor(props) {
@@ -12,11 +13,13 @@ class Registation extends React.Component {
       password: "",
       isLoading: "",
       disable: false,
-      option: ""
+      option: "admin"
     };
   }
   handleOptionChange = e => {
     e.preventDefault();
+    console.log(e.target.value, e.target.name);
+
     this.setState({ option: e.target.value });
   };
   handleUserChange = e => {
@@ -27,7 +30,7 @@ class Registation extends React.Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    this.props.registationRequest(this.state.username, this.state.password);
+    this.props.registationRequest(this.state.username, this.state.password, this.state.option);
     if (this.props.registerStatus && this.props.registerStatus.isRegistion) {
       this.setState({ username: "" });
       this.setState({ password: "" });
@@ -77,8 +80,7 @@ class Registation extends React.Component {
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect1">
             <Form.Label> Select User</Form.Label>
-            <Form.Control as="select" onClick={this.handleOptionChange}>
-              <option>SelectUserType</option>
+            <Form.Control name="option" as="select" onChange={this.handleOptionChange}>
               <option value="Admin">Admin</option>
               <option value="Guest">Guest(User)</option>
             </Form.Control>

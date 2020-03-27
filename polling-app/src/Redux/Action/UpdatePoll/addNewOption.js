@@ -13,7 +13,7 @@ export function addNewOptionForm(id, newOption) {
         {},
         {}
       ).then(res => dispatch(addPollAction()));
-     
+
       if (!data.error) {
         dispatch(AddNewOptionSuccess({ response: data }));
       } else {

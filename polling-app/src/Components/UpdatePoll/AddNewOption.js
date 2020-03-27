@@ -8,9 +8,9 @@ class AddNewOptionConfirmationBox extends React.Component {
                 <Modal.Header closeButton>
                     <Modal.Title>New Option</Modal.Title>
                 </Modal.Header>
-                <InputGroup className="mb-3">
-                    <FormControl placeholder="New Option...."
-                        value={this.props.newOption}
+                <InputGroup >
+                    <FormControl className=" ml-5 mr-5"
+                        placeholder="Add new option...."
                         onChange={this.props.handleChangeAddNewOption}
                     />
                 </InputGroup>

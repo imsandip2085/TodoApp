@@ -50,7 +50,7 @@ class AddPoll extends React.Component {
         <Navbar className="navbar" bg="dark" variant="dark">
           <Navbar.Brand href="#home">PollingApp</Navbar.Brand>
           <Link to="/updatepoll" className="ml-4">
-            <Button variant="success">Update Poll</Button>
+            <Button variant="success">Dashboard</Button>
           </Link>
         </Navbar>
         <div className="login">
@@ -94,9 +94,12 @@ class AddPoll extends React.Component {
                   );
                 })}
                 {!this.state.options.length == 0 ? (
-                  <Button variant="primary" onClick={this.handleSubmit}>
-                    Add Poll
+                  <Link to="/updatepoll">
+                    <Button variant="primary" onClick={this.handleSubmit}>
+                      Add Poll
                   </Button>
+                  </Link>
+
                 ) : null}{" "}
                 {!this.state.title == 0 ? (
                   <Button variant="primary" onClick={this.handleAddOption}>

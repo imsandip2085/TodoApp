@@ -3,7 +3,7 @@ import apiRequest from "../../service/apicall";
 
 export function AddNewPollForm(title, options) {
   return async function (dispatch) {
-    let options_string = "";
+    let options_string = "null";
     options.map((opt) => {
       options_string += opt + '____';
     })

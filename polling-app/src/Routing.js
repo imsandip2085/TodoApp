@@ -19,7 +19,7 @@ class Routing extends React.Component{
                 <Route path="/registation" component={Registation} />
                 <PrivateRoute exact path="/updatepoll" component={UpdatePoll} />
                 <PrivateRoute path='/updatepoll/addpoll' component={AddPoll} />
-                <PrivateRoute path='dashboard' component={DashBoard} />
+                <PrivateRoute path='/dashboard' component={DashBoard} />
             </Switch>
         </Router>
         )
