@@ -3,8 +3,6 @@ import apiRequest from "../../../service/apicall";
 import { addPollAction } from "../../Action/Poll/getPollAction";
 
 export function updateTitleForm(title, id) {
-  console.log(title,"vcvcbv");
-  
   return async function (dispatch, getState) {
     try {
       let error;
