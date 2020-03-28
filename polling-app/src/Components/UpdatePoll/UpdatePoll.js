@@ -57,7 +57,7 @@ class UpdatePoll extends React.Component {
     this.setState({ showTitle: false })
   }
   handleChangeTitle = (e, titleText) => {
-   
+   this.setState({titleText1 : e.target.value});
     this.setState({ title: e.target.value });
   };
   handleShowNewOptionModele = (e, id) => {
@@ -160,6 +160,7 @@ class UpdatePoll extends React.Component {
             );
           })}
         <UpdateTitleConfirmationBox Show={this.state.showTitle}
+          textTitle = {this.state.titleText1}
           handleChangeTitle={this.handleChangeTitle}
           handleEditTitleModel={this.handleEditTitleModel}
           handleHideEditTitleModel={this.handleHideEditTitleModel}

@@ -40,7 +40,6 @@ class Registation extends React.Component {
     if (this.props.registerStatus && this.props.registerStatus.isRegistion) {
       this.props.history.push("/login");
     }
-
     return (
       <div>
         <Navbar bg="dark" variant="dark">
@@ -94,7 +93,7 @@ class Registation extends React.Component {
                 aria-hidden="true"
               />
             ) : null}
-            Submit
+            {this.props.registerStatus.isLoading == true ? null : <span>Submit</span>}
           </Button>
         </Form>
       </div>
