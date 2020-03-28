@@ -27,7 +27,6 @@ class Login extends React.Component {
       this.setState({ username: "" });
       this.setState({ password: "" });
     }
-
   };
 
   componentDidUpdate(preProps) {
@@ -42,7 +41,6 @@ class Login extends React.Component {
       }
     }
   }
-
   render() {
     return (
       <div>
@@ -87,7 +85,7 @@ class Login extends React.Component {
             {this.props.LoginStatus.isLoading == true ? (
               <Spinner animation="border" size="sm" />
             ) : null}
-            Submit
+            {this.props.LoginStatus.isLoading == true ? null : <span>Submit</span>}
           </Button>
         </Form>
       </div>
