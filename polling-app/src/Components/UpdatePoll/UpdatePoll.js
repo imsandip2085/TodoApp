@@ -45,25 +45,30 @@ class UpdatePoll extends React.Component {
 
   };
   handleShowEditTitleModele = (e, id, titleText) => {
-    this.setState({ showTitle: true, editTitleId: id, titleText1: titleText });
+    this.setState({ showTitle: true, editTitleId: id, titleText1: titleText }); 
   };
   handleEditTitleModel = (e, id, titleText) => {
     this.setState({ showTitle: false });
+    if(this.state.title !== ""){
     this.props.updateTitleRequest(this.state.title, this.state.editTitleId);
-
+    }
   };
   handleHideEditTitleModel = (e, id, titleText) => {
     this.setState({ showTitle: false })
   }
   handleChangeTitle = (e, titleText) => {
+   
     this.setState({ title: e.target.value });
   };
   handleShowNewOptionModele = (e, id) => {
     this.setState({ newOptionShow: true, newOptionId: id });
+    this.setState({ newOption : '' });
   };
   handleAddNewOptionModel = (e) => {
     this.setState({ newOptionShow: false });
+    if(this.state.newOption != ""){
     this.props.addNewOptionRequest(this.state.newOptionId, this.state.newOption);
+    }
   };
   handleHideAddNewOptionModel = (e, id) => {
     this.setState({ newOptionShow: false })
