@@ -5,7 +5,7 @@ export default async function apiRequest(url, method, header, data) {
   try {
     switch (method) {
       case "get":
-        response = await axios.get(url, { header: header });
+        response = await axios.get(url, { headers: header });
         return response.data;
       case "post":
         response = await axios.post(url, { headers: header, data: data });

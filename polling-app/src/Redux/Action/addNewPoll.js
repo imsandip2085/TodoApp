@@ -4,9 +4,15 @@ import apiRequest from "../../service/apicall";
 export function AddNewPollForm(title, options) {
   return async function (dispatch) {
     let options_string = "";
-    options.map((opt) => {
-      options_string += opt + '____';
+    options.map((opt, index) => {
+      if (index == options.length - 1) {
+        options_string += opt;
+      }
+      else {
+        options_string += opt + '____';
+      }
     })
+
     try {
       let error;
       dispatch(AddNewPollRequest({ isLoading: true }));

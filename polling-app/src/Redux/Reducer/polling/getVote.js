@@ -1,5 +1,5 @@
-import * as constant from '../constant';
 
+import * as constant from '../../constant'
 let initialState = {
   isLoading: false
 };

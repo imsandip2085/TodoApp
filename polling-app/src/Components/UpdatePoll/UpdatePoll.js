@@ -21,6 +21,7 @@ import DeleteOptionConfirmationBox from './DeleteOptionConfirmationBox';
 import DeletePollConfirmationBox from "./DeletePollConformationBox";
 import UpdateTitleConfirmationBox from './UpdateTitleConfirm';
 import AddNewOptionConfirmationBox from './AddNewOption';
+import { loginForm } from "../../Redux/Action/login";
 
 
 class UpdatePoll extends React.Component {
@@ -45,7 +46,6 @@ class UpdatePoll extends React.Component {
   };
   handleShowEditTitleModele = (e, id, titleText) => {
     this.setState({ showTitle: true, editTitleId: id, titleText1: titleText });
-
   };
   handleEditTitleModel = (e, id, titleText) => {
     this.setState({ showTitle: false });
@@ -58,15 +58,17 @@ class UpdatePoll extends React.Component {
   handleChangeTitle = (e, titleText) => {
     this.setState({ title: e.target.value });
   };
-  handleNewOptionShow = (e, id) => {
-    this.setState({ id: id })
-    this.setState({ newOptionShow: true });
+  handleShowNewOptionModele = (e, id) => {
+    this.setState({ newOptionShow: true, newOptionId: id });
   };
-  handleNewOptionClose = (e) => {
+  handleAddNewOptionModel = (e) => {
     this.setState({ newOptionShow: false });
-    this.props.addNewOptionRequest(this.state.id, this.state.newOption);
+    this.props.addNewOptionRequest(this.state.newOptionId, this.state.newOption);
   };
-  handleChangeAddNewOption = e => {
+  handleHideAddNewOptionModel = (e, id) => {
+    this.setState({ newOptionShow: false })
+  }
+  handleChangeAddNewOption = (e) => {
     this.setState({ newOption: e.target.value });
   }
   handleDeleteOption = (e, id, text) => {
@@ -83,22 +85,26 @@ class UpdatePoll extends React.Component {
     this.setState({ deletePollShow: false })
     this.props.deletePollRequest(this.state.deletePollId);
   }
-  handleShowDeletePollModele = (e, id) => {
-    this.setState({ deletePollShow: true, deletePollId: id })
+  handleShowDeletePollModele = (e, id, text) => {
+    this.setState({ deletePollShow: true, deletePollId: id, deleteTitle: text })
   }
   handleDeletePollHideModel = (e, id) => {
     this.setState({ deletePollShow: false })
+  }
+  handleLogOut = () => {
+    let tokenValue = localStorage.getItem('token');
+    localStorage.setItem("token", tokenValue === '');
   }
   render() {
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">
           <Navbar.Brand href="#home">PollingApp</Navbar.Brand>
-          <Link to="/dashboard" className="ml-4">
-            <Button variant="success">Dashboard</Button>
-          </Link>
-          <Link to="/dashboard/addpoll" className="ml-4">
+          <Link to="/updatepoll/addpoll" className="ml-4">
             <Button variant="success">Add Poll</Button>
+          </Link>
+          <Link to="/" className="ml-4"  >
+            <Button className="button" variant="danger" onClick={this.handleLogOut}>Log Out</Button>
           </Link>
         </Navbar>
         <div className="login">
@@ -119,6 +125,9 @@ class UpdatePoll extends React.Component {
                   Options :
                   <ul>
                     {val.options.map((res, index) => {
+                      {
+                        localStorage.setItem("vote1", res.vote);
+                      }
                       return (
                         <div>
                           <li className={'mt-3'} > <span className="pl-4">{res.vote}</span> {res.option}<Toast className="toast">
@@ -136,11 +145,11 @@ class UpdatePoll extends React.Component {
                   </Button>{" "}
                   <Button
                     variant="outline-info" value={val._id}
-                    onClick={(e) => this.handleNewOptionShow(e, val._id)}
+                    onClick={(e) => this.handleShowNewOptionModele(e, val._id)}
                   >
                     New Option
                   </Button>{" "}
-                  <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleShowDeletePollModele(e, val._id)}>Delete Poll</Button>
+                  <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleShowDeletePollModele(e, val._id, val.title)}>Delete Poll</Button>
                 </Card.Body>
               </Card>
             );
@@ -148,10 +157,24 @@ class UpdatePoll extends React.Component {
         <UpdateTitleConfirmationBox Show={this.state.showTitle}
           handleChangeTitle={this.handleChangeTitle}
           handleEditTitleModel={this.handleEditTitleModel}
-          handleHideEditTitleModel={this.handleHideEditTitleModel} />
-        <AddNewOptionConfirmationBox Show={this.state.newOptionShow} />
-        <DeletePollConfirmationBox Show={this.state.deletePollShow} handleDeletePoll={this.handleDeletePoll} handleDeletePollHideModel={this.handleDeletePollHideModel} />
-        <DeleteOptionConfirmationBox Show={this.state.deleteOptionShow} handleDeleteOption={this.handleDeleteOption} handleHideModel={this.handleHideModel} />
+          handleHideEditTitleModel={this.handleHideEditTitleModel}
+        />
+        <AddNewOptionConfirmationBox Show={this.state.newOptionShow}
+          handleHideAddNewOptionModel={this.handleHideAddNewOptionModel}
+          handleAddNewOptionModel={this.handleAddNewOptionModel}
+          handleChangeAddNewOption={this.handleChangeAddNewOption}
+          optionText={this.state.deleteText}
+        />
+        <DeletePollConfirmationBox Show={this.state.deletePollShow}
+          handleDeletePoll={this.handleDeletePoll}
+          handleDeletePollHideModel={this.handleDeletePollHideModel}
+          deleteTitle={this.state.deleteTitle}
+        />
+        <DeleteOptionConfirmationBox Show={this.state.deleteOptionShow}
+          handleDeleteOption={this.handleDeleteOption}
+          handleHideModel={this.handleHideModel}
+          optionText={this.state.deleteText}
+        />
       </div>
     );
   }
