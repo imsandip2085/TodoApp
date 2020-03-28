@@ -9,6 +9,7 @@ class DashBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
     };
   }
   componentDidMount = () => {
@@ -25,14 +26,17 @@ class DashBoard extends React.Component {
   }
   handleClick = () => {
     let tokenValue = localStorage.getItem('token');
-    localStorage.setItem("token1", tokenValue === '');
+    localStorage.setItem("token", tokenValue === '');
+
   }
   render() {
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">
           <Navbar.Brand href="#home">PollingApp</Navbar.Brand>
-          <Button variant="outline-info" onClick={this.handleClick}>Log Out</Button>
+          <Link to="/">
+            <Button variant="danger" onClick={this.handleClick}>Log Out</Button>
+          </Link>
         </Navbar>
         <div className="login">
           <h1>Take Poll</h1>

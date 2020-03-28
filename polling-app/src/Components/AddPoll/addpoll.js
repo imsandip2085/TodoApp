@@ -31,19 +31,24 @@ class AddPoll extends React.Component {
   };
   handleSubmit = event => {
     this.props.addNewPollRequest(this.state.title, this.state.options);
-    event.preventDefault();
+    this.props.history.push("/updatepoll");
   };
   handleAddOption = event => {
     event.preventDefault();
     this.setState(prevState => {
       return { options: [...prevState.options, ""] };
     });
+
   };
   handleDeleteOption = (e, index) => {
     e.preventDefault();
     this.state.options.splice(index, 1);
     this.setState({ options: this.state.options });
   };
+  handleLogOut = () => {
+    let tokenValue = localStorage.getItem('token');
+    localStorage.setItem("token", tokenValue === '');
+  }
   render() {
     return (
       <div>
@@ -51,6 +56,9 @@ class AddPoll extends React.Component {
           <Navbar.Brand href="#home">PollingApp</Navbar.Brand>
           <Link to="/updatepoll" className="ml-4">
             <Button variant="success">Dashboard</Button>
+          </Link>
+          <Link to="/" className="ml-4">
+            <Button variant="danger" onClick={this.handleLogOut}>Log Out</Button>
           </Link>
         </Navbar>
         <div className="login">
@@ -94,12 +102,9 @@ class AddPoll extends React.Component {
                   );
                 })}
                 {!this.state.options.length == 0 ? (
-                  <Link to="/updatepoll">
-                    <Button variant="primary" onClick={this.handleSubmit}>
-                      Add Poll
+                  <Button variant="primary" onClick={this.handleSubmit}>
+                    Add Poll
                   </Button>
-                  </Link>
-
                 ) : null}{" "}
                 {!this.state.title == 0 ? (
                   <Button variant="primary" onClick={this.handleAddOption}>

@@ -12,8 +12,8 @@ class DeletePollConfirmationBox extends React.Component {
     render() {
         return (
             <Modal show={this.props.Show} >
-                <h6>Are u sure want to delete this poll</h6><hr />
-                <h6 className='ml-4 text-center'>{this.props.deleteTitle}</h6>
+                <h6 className='mt-4 text-center'>Are u sure want to delete this poll</h6><hr />
+                <h6 className='mb-5 text-center'>{this.props.deleteTitle}</h6>
                 <Modal.Footer>
                     <Button variant="primary" size="xs" onClick={this.props.handleDeletePoll}>
                         Yes

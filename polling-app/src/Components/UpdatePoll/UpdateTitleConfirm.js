@@ -11,7 +11,6 @@ class UpdateTitleConfirmationBox extends React.Component {
 
                 <InputGroup >
                     <FormControl className=" ml-5 mr-5"
-                        value={this.props.titleText1}
                         onChange={this.props.handleChangeTitle}
                     />
                 </InputGroup>

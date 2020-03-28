@@ -14,8 +14,8 @@ class DeleteOptionConfirmationBox extends React.Component {
     render() {
         return (
             <Modal show={this.props.Show} >
-                <h6 className="m-4">Are u sure want to delete this option</h6><hr />
-                <h6 className=" text-center">{this.props.optionText}</h6>
+                <h6 className="mt-5 text-center">Are u sure want to delete this option</h6><hr />
+                <h6 className="mb-5 text-center">{this.props.optionText}</h6>
                 <Modal.Footer>
                     <Button variant="primary" size="xs" onClick={this.props.handleDeleteOption}>
                         Yes

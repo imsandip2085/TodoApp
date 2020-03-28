@@ -46,7 +46,6 @@ class UpdatePoll extends React.Component {
   };
   handleShowEditTitleModele = (e, id, titleText) => {
     this.setState({ showTitle: true, editTitleId: id, titleText1: titleText });
-
   };
   handleEditTitleModel = (e, id, titleText) => {
     this.setState({ showTitle: false });
@@ -71,7 +70,6 @@ class UpdatePoll extends React.Component {
   }
   handleChangeAddNewOption = (e) => {
     this.setState({ newOption: e.target.value });
-
   }
   handleDeleteOption = (e, id, text) => {
     this.setState({ deleteOptionShow: false })
@@ -93,6 +91,10 @@ class UpdatePoll extends React.Component {
   handleDeletePollHideModel = (e, id) => {
     this.setState({ deletePollShow: false })
   }
+  handleLogOut = () => {
+    let tokenValue = localStorage.getItem('token');
+    localStorage.setItem("token", tokenValue === '');
+  }
   render() {
     return (
       <div>
@@ -100,6 +102,9 @@ class UpdatePoll extends React.Component {
           <Navbar.Brand href="#home">PollingApp</Navbar.Brand>
           <Link to="/updatepoll/addpoll" className="ml-4">
             <Button variant="success">Add Poll</Button>
+          </Link>
+          <Link to="/" className="ml-4"  >
+            <Button className="button" variant="danger" onClick={this.handleLogOut}>Log Out</Button>
           </Link>
         </Navbar>
         <div className="login">
@@ -150,7 +155,6 @@ class UpdatePoll extends React.Component {
             );
           })}
         <UpdateTitleConfirmationBox Show={this.state.showTitle}
-          titleText1={this.state.titleText1}
           handleChangeTitle={this.handleChangeTitle}
           handleEditTitleModel={this.handleEditTitleModel}
           handleHideEditTitleModel={this.handleHideEditTitleModel}
