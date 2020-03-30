@@ -84,7 +84,8 @@ class Registation extends React.Component {
               <option value="Guest">Guest(User)</option>
             </Form.Control>
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+
+          <Button variant="primary" disabled={this.props.registerStatus.isLoading == true} type="submit" onClick={this.handleSubmit}>
             {this.props.registerStatus.isLoading == true ? (
               <Spinner
                 animation="border"

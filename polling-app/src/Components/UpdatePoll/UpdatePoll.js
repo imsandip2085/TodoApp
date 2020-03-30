@@ -22,6 +22,8 @@ import DeletePollConfirmationBox from "./DeletePollConformationBox";
 import UpdateTitleConfirmationBox from './UpdateTitleConfirm';
 import AddNewOptionConfirmationBox from './AddNewOption';
 import { loginForm } from "../../Redux/Action/login";
+import * as _ from "lodash";
+
 
 
 class UpdatePoll extends React.Component {
@@ -101,6 +103,8 @@ class UpdatePoll extends React.Component {
     localStorage.setItem("token", tokenValue === '');
   }
   render() {
+    const iteratees = obj => obj.title;
+    const sorted = _.sortBy(this.props.addPollStatus.response, iteratees);
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">
@@ -115,10 +119,7 @@ class UpdatePoll extends React.Component {
         <div className="login">
           <h1>Update Poll</h1>
         </div>
-        {this.props.addPollStatus.response &&
-          this.props.addPollStatus.response.length &&
-          this.props.addPollStatus.response.map((val, index) => {
-
+          {sorted.map((val, key) => {
             return (
               <Card
                 className={"card"}
