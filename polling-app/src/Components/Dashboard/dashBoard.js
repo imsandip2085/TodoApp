@@ -4,6 +4,7 @@ import { addPollAction } from "../../Redux/Action/Poll/getPollAction";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { GetVote } from "../../Redux/Action/Poll/getVote";
+import * as _ from "lodash";
 
 class DashBoard extends React.Component {
   constructor(props) {
@@ -30,6 +31,8 @@ class DashBoard extends React.Component {
 
   }
   render() {
+  const iteratees = obj => obj.title;
+  const sorted = _.sortBy(this.props.addPollStatus.response, iteratees);
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">
@@ -41,10 +44,7 @@ class DashBoard extends React.Component {
         <div className="login">
           <h1>Take Poll</h1>
         </div>
-        {this.props.addPollStatus.response &&
-          this.props.addPollStatus.response.length &&
-          this.props.addPollStatus.response.map((val, key) => {
-            let currentId = val._id;
+          {sorted.map((val, key) => {
             return (
               <Card style={{ margin: "40px 60px" }} className={"card"}>
                 <Card.Body>

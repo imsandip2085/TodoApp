@@ -22,7 +22,9 @@ class Login extends React.Component {
   };
   handleSubmit = e => {
     e.preventDefault();
+    if(this.state.username !== "" && this.state.password !== ""){
     this.props.logingRequest(this.state.username, this.state.password);
+    }
     if (this.props.LoginStatus && this.props.LoginStatus.isLogin) {
       this.setState({ username: "" });
       this.setState({ password: "" });
@@ -81,7 +83,7 @@ class Login extends React.Component {
               onChange={this.handlePasswordChange}
             />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+          <Button variant="primary" type="submit" disabled={this.props.LoginStatus.isLoading == true} onClick={this.handleSubmit}>
             {this.props.LoginStatus.isLoading == true ? (
               <Spinner animation="border" size="sm" />
             ) : null}
