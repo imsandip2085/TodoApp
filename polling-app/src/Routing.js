@@ -14,7 +14,7 @@ class Routing extends React.Component{
         return(
             <Router>
             <Switch>
-                <Route exact path="/" component={Login} />
+                <PublicRoute exact path="/" component={Login} />
                 <Route path="/login" component={Login} />
                 <Route path="/registation" component={Registation} />
                 <PrivateRoute exact path="/updatepoll" component={UpdatePoll} />

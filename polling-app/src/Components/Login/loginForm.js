@@ -5,6 +5,7 @@ import { LoginError } from "../../Redux/Action";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -22,8 +23,8 @@ class Login extends React.Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    if(this.state.username !== "" && this.state.password !== ""){
-    this.props.logingRequest(this.state.username, this.state.password);
+    if (this.state.username !== "" && this.state.password !== "") {
+      this.props.logingRequest(this.state.username, this.state.password);
     }
     if (this.props.LoginStatus && this.props.LoginStatus.isLogin) {
       this.setState({ username: "" });
@@ -33,9 +34,9 @@ class Login extends React.Component {
 
   componentDidUpdate(preProps) {
     const { LoginStatus } = this.props;
-
     if (LoginStatus.isLogin !== preProps.LoginStatus.isLogin && LoginStatus.isLogin) {
-      console.log(LoginStatus.response.data.token, "sscjdvfdvdbffjb")
+
+      localStorage.setItem('userType', LoginStatus.response.role);
       if (LoginStatus.response.role === "admin") {
         this.props.history.push("/updatepoll");
       } else {

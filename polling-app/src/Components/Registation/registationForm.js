@@ -18,8 +18,6 @@ class Registation extends React.Component {
   }
   handleOptionChange = e => {
     e.preventDefault();
-    console.log(e.target.value, e.target.name);
-
     this.setState({ option: e.target.value });
   };
   handleUserChange = e => {
