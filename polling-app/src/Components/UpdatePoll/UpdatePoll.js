@@ -88,16 +88,13 @@ class UpdatePoll extends React.Component {
       this.props.deleteOptionRequest(this.state.deleteId, this.state.deleteText);
     }
   }
-  handleDeleteModel = (e, id, text, index, vote, valOptions) => {
-   
-    this.setState({ warningShow1: false })
-    valOptions.map((res1) => {
-      if (res1.vote == 1) {
-        this.setState({ warningShow1: true })
-      }
+  handleDeleteModel = (e, id, text, index, vote) => {
+    if(vote == 1){
+      this.setState({ warningShow1: true })
+    }else{
+      this.setState({ warningShow1: false })
     }
-    )
-    this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text, deleteOptionIndex: index, voteValue: vote,valOptions:valOptions })
+    this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text, deleteOptionIndex: index, voteValue: vote })
   }
   handleHideModel = (e, id, text) => {
     this.setState({ deleteOptionShow: false })
@@ -157,7 +154,7 @@ class UpdatePoll extends React.Component {
                     return (
                       <div>
                         <li className={'mt-3'} > <span className="pl-4">{res.vote}</span>{res.option}<Toast className="toast">
-                          <ToastHeader optionId={val._id} onClick={(e) => this.handleDeleteModel(e, val._id, res.option, index, res.vote, val.options)}>
+                          <ToastHeader optionId={val._id} onClick={(e) => this.handleDeleteModel(e, val._id, res.option, index, res.vote)}>
                           </ToastHeader>
                         </Toast>
                         </li>
