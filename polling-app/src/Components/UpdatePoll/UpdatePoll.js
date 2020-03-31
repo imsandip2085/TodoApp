@@ -84,11 +84,12 @@ class UpdatePoll extends React.Component {
   }
   handleDeleteOption = (e, id, text) => {
     this.setState({ deleteOptionShow: false })
-    if (this.state.deleteOptionIndex !== 0 && this.state.voteValue !== 1) {
+    if (this.state.valOptions.length !== 1 && this.state.voteValue !== 1) {
       this.props.deleteOptionRequest(this.state.deleteId, this.state.deleteText);
     }
   }
   handleDeleteModel = (e, id, text, index, vote, valOptions) => {
+   
     this.setState({ warningShow1: false })
     valOptions.map((res1) => {
       if (res1.vote == 1) {
@@ -96,7 +97,7 @@ class UpdatePoll extends React.Component {
       }
     }
     )
-    this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text, deleteOptionIndex: index, voteValue: vote })
+    this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text, deleteOptionIndex: index, voteValue: vote,valOptions:valOptions })
   }
   handleHideModel = (e, id, text) => {
     this.setState({ deleteOptionShow: false })
