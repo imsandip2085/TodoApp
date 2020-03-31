@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { GetVote } from "../../Redux/Action/Poll/getVote";
 import * as _ from "lodash";
+import { Redirect } from "react-router-dom";
 
 class DashBoard extends React.Component {
   constructor(props) {
@@ -26,13 +27,12 @@ class DashBoard extends React.Component {
     this.props.getVoteRequest(id, text, userToken);
   }
   handleClick = () => {
-    let tokenValue = localStorage.getItem('token');
-    localStorage.setItem("token", tokenValue === '');
-
+    localStorage.clear();
+    this.props.history.push("/login");
   }
   render() {
-  const iteratees = obj => obj.title;
-  const sorted = _.sortBy(this.props.addPollStatus.response, iteratees);
+    const iteratees = obj => obj.title;
+    const sorted = _.sortBy(this.props.addPollStatus.response, iteratees);
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">
@@ -44,29 +44,29 @@ class DashBoard extends React.Component {
         <div className="login">
           <h1>Take Poll</h1>
         </div>
-          {sorted.map((val, key) => {
-            return (
-              <Card style={{ margin: "40px 60px" }} className={"card"}>
-                <Card.Body>
-                  <Card.Title>Title : {val.title}</Card.Title>
-                  {val.disabled = localStorage.getItem(val._id) ? true : false}
-                  Options :
+        {sorted.map((val, key) => {
+          return (
+            <Card style={{ margin: "40px 60px" }} className={"card"}>
+              <Card.Body>
+                <Card.Title>Title : {val.title}</Card.Title>
+                {val.disabled = localStorage.getItem(val._id) ? true : false}
+                Options :
                   <ul>
-                    {val.options.map((res, index) => {
-                      return (
-                        <li>
-                          {res.option == localStorage.getItem(val._id)}
-                          <input type="radio" name={val._id} checked={res.option == localStorage.getItem(val._id)} disabled={val.disabled} onClick={(e) => this.handleVoteClick(val._id, res.option)}></input>
-                          <label className="pl-4">{res.option}</label>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <hr />
-                </Card.Body>
-              </Card>
-            );
-          })}
+                  {val.options.map((res, index) => {
+                    return (
+                      <li>
+                        {res.option == localStorage.getItem(val._id)}
+                        <input type="radio" name={val._id} checked={res.option == localStorage.getItem(val._id)} disabled={val.disabled} onClick={(e) => this.handleVoteClick(val._id, res.option)}></input>
+                        <label className="pl-4">{res.option}</label>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <hr />
+              </Card.Body>
+            </Card>
+          );
+        })}
       </div>
     );
   }

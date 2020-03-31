@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-// import { isLogin } from './Components/Login/loginForm';
 
-const PrivateRoute = ({component: Component, ...rest}) => {
+
+const PrivateRoute = ({component: Component,path, ...rest}) => {  
     return (
-        <Route {...rest} render={props => (
+        <Route  path={path} {...rest} render={props => ( 
             localStorage.getItem('token') ?
                 <Component {...props}  />
             : <Redirect to="/login" />

@@ -6,7 +6,6 @@ import { addPollAction } from "./getPollAction"
 export function GetVote(id, text, userText) {
   return async function (dispatch) {
     try {
-
       let error;
       dispatch(GetVoteRequest({ isLoading: true }));
       let header = {

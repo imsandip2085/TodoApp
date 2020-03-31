@@ -26,6 +26,7 @@ import * as _ from "lodash";
 
 
 
+
 class UpdatePoll extends React.Component {
   constructor(props) {
     super(props);
@@ -34,10 +35,13 @@ class UpdatePoll extends React.Component {
       newOptionShow: false,
       deleteOptionShow: false,
       deletePollShow: false,
+      warningShow: false,
+      warningShow1: false,
       title: "",
       newOption: [],
       id: "",
       deleteOptionValue: false,
+
     };
   }
   componentDidMount = () => {
@@ -46,30 +50,30 @@ class UpdatePoll extends React.Component {
   componentDidUpdate = () => {
 
   };
-  handleShowEditTitleModele = (e, id, titleText) => {
-    this.setState({ showTitle: true, editTitleId: id, titleText1: titleText }); 
+  handleShowEditTitleModele = (e, id, titleText, ) => {
+    this.setState({ showTitle: true, editTitleId: id, titleText1: titleText });
   };
   handleEditTitleModel = (e, id, titleText) => {
     this.setState({ showTitle: false });
-    if(this.state.title !== ""){
-    this.props.updateTitleRequest(this.state.title, this.state.editTitleId);
+    if (this.state.title !== "") {
+      this.props.updateTitleRequest(this.state.title, this.state.editTitleId);
     }
   };
   handleHideEditTitleModel = (e, id, titleText) => {
     this.setState({ showTitle: false })
   }
   handleChangeTitle = (e, titleText) => {
-   this.setState({titleText1 : e.target.value});
+    this.setState({ titleText1: e.target.value });
     this.setState({ title: e.target.value });
   };
   handleShowNewOptionModele = (e, id) => {
     this.setState({ newOptionShow: true, newOptionId: id });
-    this.setState({ newOption : '' });
+    this.setState({ newOption: '' });
   };
   handleAddNewOptionModel = (e) => {
     this.setState({ newOptionShow: false });
-    if(this.state.newOption != ""){
-    this.props.addNewOptionRequest(this.state.newOptionId, this.state.newOption);
+    if (this.state.newOption != "") {
+      this.props.addNewOptionRequest(this.state.newOptionId, this.state.newOption);
     }
   };
   handleHideAddNewOptionModel = (e, id) => {
@@ -80,10 +84,19 @@ class UpdatePoll extends React.Component {
   }
   handleDeleteOption = (e, id, text) => {
     this.setState({ deleteOptionShow: false })
-    this.props.deleteOptionRequest(this.state.deleteId, this.state.deleteText);
+    if (this.state.deleteOptionIndex !== 0 && this.state.voteValue !== 1) {
+      this.props.deleteOptionRequest(this.state.deleteId, this.state.deleteText);
+    }
   }
-  handleDeleteModel = (e, id, text) => {
-    this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text })
+  handleDeleteModel = (e, id, text, index, vote, valOptions) => {
+    this.setState({ warningShow1: false })
+    valOptions.map((res1) => {
+      if (res1.vote == 1) {
+        this.setState({ warningShow1: true })
+      }
+    }
+    )
+    this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text, deleteOptionIndex: index, voteValue: vote })
   }
   handleHideModel = (e, id, text) => {
     this.setState({ deleteOptionShow: false })
@@ -92,15 +105,22 @@ class UpdatePoll extends React.Component {
     this.setState({ deletePollShow: false })
     this.props.deletePollRequest(this.state.deletePollId);
   }
-  handleShowDeletePollModele = (e, id, text) => {
+  handleShowDeletePollModele = (e, id, text, valOptions) => {
+    this.setState({ warningShow: false })
+    valOptions.map((res1) => {
+      if (res1.vote == 1) {
+        this.setState({ warningShow: true })
+      }
+    }
+    )
     this.setState({ deletePollShow: true, deletePollId: id, deleteTitle: text })
   }
   handleDeletePollHideModel = (e, id) => {
     this.setState({ deletePollShow: false })
   }
   handleLogOut = () => {
-    let tokenValue = localStorage.getItem('token');
-    localStorage.setItem("token", tokenValue === '');
+    localStorage.clear();
+    this.props.history.push("/login");
   }
   render() {
     const iteratees = obj => obj.title;
@@ -119,49 +139,48 @@ class UpdatePoll extends React.Component {
         <div className="login">
           <h1>Update Poll</h1>
         </div>
-          {sorted.map((val, key) => {
-            return (
-              <Card
-                className={"card"}
-                className="m-4"
-              >
-                <Card.Body>
-                  <Card.Title>Title : {val.title}</Card.Title>
-
-                  Options :
-                  <ul>
-                    {val.options.map((res, index) => {
-                      {
-                        localStorage.setItem("vote1", res.vote);
-                      }
-                      return (
-                        <div>
-                          <li className={'mt-3'} > <span className="pl-4">{res.vote}</span> {res.option}<Toast className="toast">
-                            <ToastHeader optionId={val._id} onClick={(e) => this.handleDeleteModel(e, val._id, res.option)}>
-                            </ToastHeader>
-                          </Toast>
-                          </li>
-                        </div>
-                      )
-                    })}
-                  </ul>
-                  <hr />
-                  <Button variant="outline-info" value={val._id} onClick={(e) => this.handleShowEditTitleModele(e, val._id, val.title)}>
-                    Edit Title
+        {sorted.map((val, key) => {
+          return (
+            <Card
+              className={"card"}
+              className="m-4"
+            >
+              <Card.Body>
+                {val.disabled = localStorage.getItem(val._id) ? true : false}
+                Options :  {val.title}
+                <ul>
+                  {val.options.map((res, index) => {
+                    {
+                      localStorage.setItem("vote1", res.vote);
+                    }
+                    return (
+                      <div>
+                        <li className={'mt-3'} > <span className="pl-4">{res.vote}</span>{res.option}<Toast className="toast">
+                          <ToastHeader optionId={val._id} onClick={(e) => this.handleDeleteModel(e, val._id, res.option, index, res.vote, val.options)}>
+                          </ToastHeader>
+                        </Toast>
+                        </li>
+                      </div>
+                    )
+                  })}
+                </ul>
+                <hr />
+                <Button variant="outline-info" value={val._id} onClick={(e) => this.handleShowEditTitleModele(e, val._id, val.title)}>
+                  Edit Title
                   </Button>{" "}
-                  <Button
-                    variant="outline-info" value={val._id}
-                    onClick={(e) => this.handleShowNewOptionModele(e, val._id)}
-                  >
-                    New Option
+                <Button
+                  variant="outline-info" value={val._id}
+                  onClick={(e) => this.handleShowNewOptionModele(e, val._id)}
+                >
+                  New Option
                   </Button>{" "}
-                  <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleShowDeletePollModele(e, val._id, val.title)}>Delete Poll</Button>
-                </Card.Body>
-              </Card>
-            );
-          })}
+                <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleShowDeletePollModele(e, val._id, val.title, val.options)}>Delete Poll</Button>
+              </Card.Body>
+            </Card>
+          );
+        })}
         <UpdateTitleConfirmationBox Show={this.state.showTitle}
-          textTitle = {this.state.titleText1}
+          textTitle={this.state.titleText1}
           handleChangeTitle={this.handleChangeTitle}
           handleEditTitleModel={this.handleEditTitleModel}
           handleHideEditTitleModel={this.handleHideEditTitleModel}
@@ -173,11 +192,13 @@ class UpdatePoll extends React.Component {
           optionText={this.state.deleteText}
         />
         <DeletePollConfirmationBox Show={this.state.deletePollShow}
+          Warning={this.state.warningShow}
           handleDeletePoll={this.handleDeletePoll}
           handleDeletePollHideModel={this.handleDeletePollHideModel}
           deleteTitle={this.state.deleteTitle}
         />
         <DeleteOptionConfirmationBox Show={this.state.deleteOptionShow}
+          Warning1={this.state.warningShow1}
           handleDeleteOption={this.handleDeleteOption}
           handleHideModel={this.handleHideModel}
           optionText={this.state.deleteText}

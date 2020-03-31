@@ -12,14 +12,13 @@ class DeletePollConfirmationBox extends React.Component {
     render() {
         return (
             <Modal show={this.props.Show} >
-                <h6 className='mt-4 text-center'>Are u sure want to delete this poll</h6><hr />
-                <h6 className='mb-5 text-center'>{this.props.deleteTitle}</h6>
+                {this.props.Warning == false ? <h6 className='mt-4 text-center'>Are u sure want to delete this poll : {this.props.deleteTitle}</h6> : <h6 className='mt-4 text-center'>Sorry!  {this.props.deleteTitle}  poll already voted</h6>}
                 <Modal.Footer>
-                    <Button variant="primary" size="xs" onClick={this.props.handleDeletePoll}>
+                    <Button variant="primary" size="xs" hidden={this.props.Warning != false} onClick={this.props.handleDeletePoll}>
                         Yes
                     </Button>
                     <Button className='m-2' variant="primary" onClick={this.props.handleDeletePollHideModel}>{" "}
-                        No
+                        {this.props.Warning != false ? <span>Cancle</span> : <span>No</span>}
                     </Button>
                 </Modal.Footer>
             </Modal>
