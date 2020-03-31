@@ -41,6 +41,7 @@ class UpdatePoll extends React.Component {
       newOption: [],
       id: "",
       deleteOptionValue: false,
+
     };
   }
   componentDidMount = () => {
@@ -87,12 +88,14 @@ class UpdatePoll extends React.Component {
       this.props.deleteOptionRequest(this.state.deleteId, this.state.deleteText);
     }
   }
-  handleDeleteModel = (e, id, text, index, vote, disabledValue) => {
-    if (disabledValue == true) {
-      this.setState({ warningShow1: true })
-    } else {
-      this.setState({ warningShow1: false })
+  handleDeleteModel = (e, id, text, index, vote, valOptions) => {
+    this.setState({ warningShow1: false })
+    valOptions.map((res1) => {
+      if (res1.vote == 1) {
+        this.setState({ warningShow1: true })
+      }
     }
+    )
     this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text, deleteOptionIndex: index, voteValue: vote })
   }
   handleHideModel = (e, id, text) => {
@@ -102,13 +105,14 @@ class UpdatePoll extends React.Component {
     this.setState({ deletePollShow: false })
     this.props.deletePollRequest(this.state.deletePollId);
   }
-  handleShowDeletePollModele = (e, id, text, disabledValue) => {
-
-    if (disabledValue == true) {
-      this.setState({ warningShow: true })
-    } else {
-      this.setState({ warningShow: false })
+  handleShowDeletePollModele = (e, id, text, valOptions) => {
+    this.setState({ warningShow: false })
+    valOptions.map((res1) => {
+      if (res1.vote == 1) {
+        this.setState({ warningShow: true })
+      }
     }
+    )
     this.setState({ deletePollShow: true, deletePollId: id, deleteTitle: text })
   }
   handleDeletePollHideModel = (e, id) => {
@@ -152,7 +156,7 @@ class UpdatePoll extends React.Component {
                     return (
                       <div>
                         <li className={'mt-3'} > <span className="pl-4">{res.vote}</span>{res.option}<Toast className="toast">
-                          <ToastHeader optionId={val._id} onClick={(e) => this.handleDeleteModel(e, val._id, res.option, index, res.vote, val.disabled)}>
+                          <ToastHeader optionId={val._id} onClick={(e) => this.handleDeleteModel(e, val._id, res.option, index, res.vote, val.options)}>
                           </ToastHeader>
                         </Toast>
                         </li>
@@ -170,7 +174,7 @@ class UpdatePoll extends React.Component {
                 >
                   New Option
                   </Button>{" "}
-                <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleShowDeletePollModele(e, val._id, val.title, val.disabled)}>Delete Poll</Button>
+                <Button variant="outline-danger" value={val._id} onClick={(e) => this.handleShowDeletePollModele(e, val._id, val.title, val.options)}>Delete Poll</Button>
               </Card.Body>
             </Card>
           );
