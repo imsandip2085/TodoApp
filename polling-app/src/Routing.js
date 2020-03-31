@@ -4,7 +4,7 @@ import  Registation from './Components/Registation/registationForm';
 import DashBoard from './Components/Dashboard/dashBoard';
 import AddPoll from './Components/AddPoll/addpoll';
 import UpdatePoll from './Components/UpdatePoll/UpdatePoll'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router,HashRouter, Switch, Route } from "react-router-dom";
 import PrivateRoute from './privateRoute';
 import PublicRoute from './publicRoute';
 
@@ -12,7 +12,7 @@ import PublicRoute from './publicRoute';
 class Routing extends React.Component{
     render(){
         return(
-            <Router>
+            <HashRouter>
             <Switch>
                 <PublicRoute exact path="/" component={Login} />
                 <Route path="/login" component={Login} />
@@ -21,7 +21,7 @@ class Routing extends React.Component{
                 <PrivateRoute path='/updatepoll/addpoll' component={AddPoll} />
                 <PrivateRoute path='/dashboard' component={DashBoard} />
             </Switch>
-        </Router>
+        </HashRouter>
         )
     }
 }
