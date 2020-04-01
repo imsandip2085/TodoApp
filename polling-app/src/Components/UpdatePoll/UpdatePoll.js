@@ -83,7 +83,6 @@ class UpdatePoll extends React.Component {
     this.setState({ newOption: e.target.value });
   }
   handleDeleteOption = (e, id, text) => {
-    console.log(this.state.valOptions.length, "vvfvfbcvbvc");
     this.setState({ deleteOptionShow: false })
     if (this.state.valOptions.length !== 1 && this.state.voteValue !== 1) {
       this.props.deleteOptionRequest(this.state.deleteId, this.state.deleteText);
