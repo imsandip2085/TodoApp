@@ -88,13 +88,14 @@ class UpdatePoll extends React.Component {
       this.props.deleteOptionRequest(this.state.deleteId, this.state.deleteText);
     }
   }
-  handleDeleteModel = (e, id, text, index, vote) => {
-    if(vote == 1){
+  handleDeleteModel = (e, id, text, index, vote, options) => {
+
+    if (vote == 1) {
       this.setState({ warningShow1: true })
-    }else{
+    } else {
       this.setState({ warningShow1: false })
     }
-    this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text, deleteOptionIndex: index, voteValue: vote })
+    this.setState({ deleteOptionShow: true, deleteId: id, deleteText: text, deleteOptionIndex: index, voteValue: vote, valOptions: options })
   }
   handleHideModel = (e, id, text) => {
     this.setState({ deleteOptionShow: false })
@@ -123,6 +124,7 @@ class UpdatePoll extends React.Component {
   render() {
     const iteratees = obj => obj.title;
     const sorted = _.sortBy(this.props.addPollStatus.response, iteratees);
+
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">
@@ -138,6 +140,7 @@ class UpdatePoll extends React.Component {
           <h1>Update Poll</h1>
         </div>
         {sorted.map((val, key) => {
+          const sorted1 = _.sortBy(val.options, 'option');
           return (
             <Card
               className={"card"}
@@ -147,14 +150,14 @@ class UpdatePoll extends React.Component {
                 {val.disabled = localStorage.getItem(val._id) ? true : false}
                 Options :  {val.title}
                 <ul>
-                  {val.options.map((res, index) => {
+                  {sorted1.map((res, index) => {
                     {
                       localStorage.setItem("vote1", res.vote);
                     }
                     return (
                       <div>
                         <li className={'mt-3'} > <span className="pl-4">{res.vote}</span>{res.option}<Toast className="toast">
-                          <ToastHeader optionId={val._id} onClick={(e) => this.handleDeleteModel(e, val._id, res.option, index, res.vote)}>
+                          <ToastHeader optionId={val._id} onClick={(e) => this.handleDeleteModel(e, val._id, res.option, index, res.vote, val.options)}>
                           </ToastHeader>
                         </Toast>
                         </li>
