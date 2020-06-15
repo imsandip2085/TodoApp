@@ -151,7 +151,6 @@ class UpdatePoll extends React.Component {
     const cardList = this.props.addPollStatus.response.reverse();
     const cardListPerPage = this.props.addPollStatus.response.length / this.state.options;
     //  if(cardListPerPage == )
-    console.log(this.state.options, "ddddddddddddddd");
 
     if (Number.isInteger(cardListPerPage)) {
       var totalCardPerPage = cardListPerPage;
