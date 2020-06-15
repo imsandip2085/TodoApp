@@ -8,7 +8,7 @@ import {
   FormControl,
   Toast,
   ToastHeader,
-  ToastBody
+  ToastBody,Form,Row,Col
 } from "react-bootstrap";
 import { addPollAction } from "../../Redux/Action/Poll/getPollAction";
 import { connect } from "react-redux";
@@ -41,7 +41,8 @@ class UpdatePoll extends React.Component {
       newOption: [],
       id: "",
       deleteOptionValue: false,
-
+      currentPageStart : 0,
+      options : 5
     };
   }
   componentDidMount = () => {
@@ -50,6 +51,12 @@ class UpdatePoll extends React.Component {
   componentDidUpdate = () => {
 
   };
+ 
+  handleOptionChange = e => {
+    e.preventDefault();
+    this.setState({ options: e.target.value });
+  };
+ 
   handleShowEditTitleModele = (e, id, titleText, ) => {
     this.setState({ showTitle: true, editTitleId: id, titleText1: titleText });
   };
@@ -121,10 +128,38 @@ class UpdatePoll extends React.Component {
     localStorage.clear();
     this.props.history.push("/login");
   }
-  render() {
-    const iteratees = obj => obj.title;
-    const sorted = _.sortBy(this.props.addPollStatus.response, iteratees);
 
+  handleNextSubmit = () =>{
+    if(this.props.addPollStatus.response.length > this.state.currentPageStart + 6 ){
+   this.setState((state, props) => ({
+     currentPageStart: state.currentPageStart + 5
+   }))
+ }
+ }
+ 
+ handlePrevSubmit =() =>{
+   if(this.state.currentPageStart > 1){
+     this.setState((state, props) => ({
+       currentPageStart: state.currentPageStart - this.state
+     }))
+   }
+ }
+
+  render() {
+    // const iteratees = obj => obj.title;
+    // const sorted = _.sortBy(this.props.addPollStatus.response, iteratees);
+    const cardList = this.props.addPollStatus.response.reverse();
+    const cardListPerPage = this.props.addPollStatus.response.length / this.state.options;
+    //  if(cardListPerPage == )
+    console.log(this.state.options, "ddddddddddddddd");
+
+    if (Number.isInteger(cardListPerPage)) {
+      var totalCardPerPage = cardListPerPage;
+    } else {
+      var totalCardPerPage = Math.floor(cardListPerPage) + 1;
+    }
+    const cardListItem = this.props.addPollStatus.response.slice(this.state.currentPageStart, this.state.currentPageStart+5);
+    
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">
@@ -137,9 +172,29 @@ class UpdatePoll extends React.Component {
           </Link>
         </Navbar>
         <div className="login">
+        <Row>
+          <Col>
           <h1>Update Poll</h1>
+          </Col>
+          <Col>
+          <Form.Group controlId="exampleForm.ControlSelect1"  className="formControl">
+            <Form.Control name="option" as="select" onChange={this.handleOptionChange} >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </Form.Control>
+          </Form.Group>
+          </Col>
+        </Row>
         </div>
-        {sorted.map((val, key) => {
+        {cardListItem.map((val, key) => {
           const sorted1 = _.sortBy(val.options, 'option');
           return (
             <Card
@@ -204,6 +259,10 @@ class UpdatePoll extends React.Component {
           handleHideModel={this.handleHideModel}
           optionText={this.state.deleteText}
         />
+         <div style={{ margin: "40px 30px" }} >
+        <Button variant="outline-primary" onClick={this.handlePrevSubmit}>Previous</Button>{ '' }
+        <Button variant="outline-primary" className="ml-5" onClick={this.handleNextSubmit}>Next</Button>
+        </div>
       </div>
     );
   }

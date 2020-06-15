@@ -11,7 +11,7 @@ class DashBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      currentPageStart :  0
     };
   }
   componentDidMount = () => {
@@ -30,9 +30,39 @@ class DashBoard extends React.Component {
     localStorage.clear();
     this.props.history.push("/login");
   }
+  
+   handleNextSubmit = () =>{
+     if(this.props.addPollStatus.response.length > this.state.currentPageStart + 6 ){
+    this.setState((state, props) => ({
+      currentPageStart: state.currentPageStart + 5
+    }))
+  }
+  }
+  
+  handlePrevSubmit =() =>{
+    if(this.state.currentPageStart > 1){
+      this.setState((state, props) => ({
+        currentPageStart: state.currentPageStart - 5
+      }))
+    }
+  }
+
   render() {
-    const iteratees = obj => obj.title;
-    const sorted = _.sortBy(this.props.addPollStatus.response, iteratees);
+    // const iteratees = obj => obj.title;
+    // const sorted = _.sortBy(this.props.addPollStatus.response, iteratees);
+    const cardList = this.props.addPollStatus.response.reverse();
+    const cardListPerPage = this.props.addPollStatus.response.length / 5;
+    //  if(cardListPerPage == )
+    console.log(this.state.currentPageStart, "ddddddddddddddd");
+
+    if (Number.isInteger(cardListPerPage)) {
+      var totalCardPerPage = cardListPerPage;
+    } else {
+      var totalCardPerPage = Math.floor(cardListPerPage) + 1;
+    }
+    const cardListItem = this.props.addPollStatus.response.slice(this.state.currentPageStart, this.state.currentPageStart+5);
+    
+
     return (
       <div>
         <Navbar className="navbar" bg="dark" variant="dark">
@@ -44,8 +74,9 @@ class DashBoard extends React.Component {
         <div className="login">
           <h1>Take Poll</h1>
         </div>
-        {sorted.map((val, key) => {
+        {cardListItem.map((val, key) => {
           return (
+            <div>
             <Card style={{ margin: "40px 60px" }} className={"card"}>
               <Card.Body>
                 <Card.Title>Title : {val.title}</Card.Title>
@@ -65,8 +96,13 @@ class DashBoard extends React.Component {
                 <hr />
               </Card.Body>
             </Card>
+            </div>
           );
         })}
+        <div style={{ margin: "40px 60px" }} >
+        <Button variant="outline-primary" onClick={this.handlePrevSubmit}>Previous</Button>{ '' }
+        <Button variant="outline-info" className="ml-5" onClick={this.handleNextSubmit}>Next</Button>
+        </div>
       </div>
     );
   }

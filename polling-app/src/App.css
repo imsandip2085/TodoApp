@@ -1,6 +1,6 @@
 .login{
   width: 100%;
-  height: 100px;
+  /* height: 100px; */
   background-color:#00997a;
   color: aliceblue;
  
@@ -8,7 +8,7 @@
 .login h1{
  text-align: center;
  padding-top: 30px;
- 
+ padding-bottom: 30px;
 }
 .navbar{
   box-shadow: 0px 8px 10px #888888;
@@ -36,4 +36,10 @@ span{
 }
 .button{
   float: right;
+}
+.formControl{
+  width: 100px;
+  text-align: center;
+ padding-top: 30px;
+ padding-bottom: 30px;
 }

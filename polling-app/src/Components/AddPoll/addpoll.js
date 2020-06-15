@@ -110,7 +110,7 @@ class AddPoll extends React.Component {
                   <Button variant="primary" onClick={this.handleAddOption}>
                     Add Option
                   </Button>
-                ) : null}{" "}
+                ) : null }{" "}
               </Form>
             </Col>
           </Row>
