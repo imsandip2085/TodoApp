@@ -13,6 +13,8 @@ export function addPollAction() {
         {},
         {}
       );
+      console.log(data,"ddddddddddd");
+
       if (data) {
         dispatch(AddPollSuccess({ response: data }));
       } else {
